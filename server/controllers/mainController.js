@@ -26,3 +26,6 @@ exports.reviews = async(req,res)=>{
         res.status(500).send("error loading features")
     }
 }
+exports.page404 = async (req,res) =>{
+    res.status(404).render('page404')
+}

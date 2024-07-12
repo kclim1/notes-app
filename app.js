@@ -15,7 +15,9 @@ app.set('view engine', 'ejs');
 
 //routes
 app.use('/',require('./server/routes/index'))
-
+app.get('*',(req,res)=>{
+    res.status(404).render("404 page not found.")
+})
 app.listen(port, () => {
     console.log(`App listening on port ${port}`);
 });
