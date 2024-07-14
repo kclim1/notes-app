@@ -13,15 +13,16 @@ app.set('layout', './layouts/main'); // Ensure the layout path is correct
 app.set('view engine', 'ejs');
 
 
-//routes
+//importing index.js from routes folder
 app.use('/',require('./server/routes/index'))
+app.use('/',require('./server/routes/dashboard'))
 
-
+//wildcard to catch all other route params not defined
 app.get('*',(req,res)=>{
     res.status(404).render("404 page not found.")
 })
 
-
+//runs app on port 
 app.listen(port, () => {
     console.log(`App listening on port ${port}`);
 });
