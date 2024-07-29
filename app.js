@@ -7,6 +7,7 @@ const connectDB = require('./server/config/db');
 const session = require('express-session')
 const passport = require('passport')
 const mongostore = require('connect-mongo')
+const path = require('path')
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
