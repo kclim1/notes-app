@@ -30,4 +30,21 @@ exports.page404 = async (req,res) =>{
     res.status(404).render('page404')
 }
 
+exports.login = async (req,res)=>{
+    try{
+        console.log('login route hit')
+        res.status(200).render('login')
+    }catch(error){
+        console.error(error)
+        res.render('page404')
+    }
+}
 
+exports.signup = async (req,res)=>{
+    try{
+        res.status(200).render('signup')
+    }catch(error){
+        console.error(error)
+        res.render('page404')
+    }
+}

@@ -7,6 +7,7 @@ router.get('/',mainController.homepage)
 router.get('/about',mainController.about)
 router.get('/reviews',mainController.reviews)
 router.get('/dashboard',dashboardController.dashboard)
+
 router.get('*',mainController.page404)
 
 

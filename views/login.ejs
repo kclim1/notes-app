@@ -1,0 +1,21 @@
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="login p-4 rounded shadow" style="width: 100%; max-width: 400px;">
+        <form class="text-center" method="POST" action="/log-in">
+            <div class="mb-3">
+                <label for="username" class="form-label">Username:</label>
+                <input id="username" name="username" type="text" class="form-control" placeholder="Username" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password:</label>
+                <input id="password" name="password" type="password" class="form-control" placeholder="Password" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100 mb-3">Log In</button>
+        </form>
+        <a href="/auth/google" class="d-block mb-2">
+            <button type="button" class="btn btn-danger w-100">Log In with Google</button>
+        </a>
+        <a href="/auth/github">
+            <button type="button" class="btn btn-dark w-100">Log in with GitHub</button>
+        </a>
+    </div>
+</div>

@@ -74,4 +74,11 @@ button:hover {
     font-size: 2rem;
     /* color:white; */
 }
+
+.login{
+  border : 5px solid black;
+}
   
+.signup{
+  border : 5px solid black;
+}
