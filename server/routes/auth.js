@@ -14,8 +14,50 @@ const crypto = require("crypto");
 const secret = crypto.randomBytes(64).toString("hex");
 const bcryptjs = require("bcryptjs");
 
-router.get("/log-in", mainController.login);
+router.get("/login", mainController.login);
 router.get("/sign-up", mainController.signup);
+
+router.get(
+  "/auth/google",
+  passport.authenticate("google", { scope: ["profile", "email"] })
+);
+
+router.get('/auth/google/callback', 
+  passport.authenticate('google', { failureRedirect: '/login' }),
+  function(req, res) {
+    res.send('logged in ');
+    console.log('google logged in ')
+  });
+
+passport.use(
+  new googleStrategy(
+    {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_SECRET,
+      callbackURL: "/auth/google/callback",
+    },
+    async function (accessToken, refreshToken, profile, cb) {
+      try {
+        let googleUser = await User.findOne({ googleId: profile.id });
+        console.log('google profile :',profile);
+        if (!googleUser) {
+          googleUser = await User.create({
+            googleId: profile.id,
+            username: profile.dislayName,
+            email: profile.emails[0].value,
+            familyName: profile.name.familyName,
+            givenName: profile.name.givenName,
+            loginTime: Date.now(),
+          });
+        }
+        cb(null,googleUser)
+      } catch (error) {
+        console.error(error)
+        cb(error)
+      }
+    }
+  )
+);
 
 router.post("/sign-up", async (req, res) => {
   try {
@@ -51,59 +93,75 @@ router.post("/sign-up", async (req, res) => {
   }
 });
 
-
-
-//local login 
-router.post('/login', 
-  passport.authenticate('local',(err,user,info)=>{
-    try{
-      if(err){
-        console.error(error)
-        return next(err)
+passport.use(
+  new localStrategy(async (username, password, done) => {
+    try {
+      const user = await User.findOne({ username });
+      if (!user) {
+        return done(null, false, { message: "Incorrect username" });
       }
-      if(!user){
-        res.send('please create account')
-        console.log('username not found')
+      const match = await bcryptjs.compare(password, user.password);
+      if (!match) {
+        return done(null, false, { message: "try again" });
       }
-      res.redirect('/')
-      console.log('successful login')
-    }catch(error){
-      console.error(error)
+      return done(null, user);
+    } catch (err) {
+      return done(err);
     }
-  }))
+  })
+);
 
+//local login
+router.post("/log-in", (req, res, next) => {
+  passport.authenticate("local", (err, user, info) => {
+    try {
+      if (err) {
+        console.error(err);
+        return next(err);
+      }
+      if (!user) {
+        res.send("please create account");
+        console.log("username not found");
+      }
+      req.logIn(user, (err) => {
+        if (err) {
+          console.error(err);
+          return next(err);
+        }
+        console.log("successful login");
+        res.redirect("/");
+      });
+    } catch (error) {
+      console.error(error);
+      return next(error); // Added return next to pass the error to the next middleware
+    }
+  })(req, res, next); // Ensure the authenticate function is invoked correctly
+});
 
+//googleauth
 
+//github auth
 
-//googleauth 
-
-
-
-//github auth 
-
-
-
-//serialize and deserealize 
-passport.serializeUser((user,done)=>{
-  try{
-    console.log('serialize:' , user)
-    done(null,user)
-  }catch(error){
-    console.error(error)
+//serialize and deserealize
+passport.serializeUser((user, done) => {
+  try {
+    console.log("serialize:", user);
+    done(null, user);
+  } catch (error) {
+    console.error(error);
   }
-})
+});
 
-passport.deserializeUser(async(id,done)=>{
-  try{
-    const user = await User.findById({id})
-    done(null,user)
-  }catch(error){
-    console.error(error)
-    done(error)
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await User.findById(id);
+    done(null, user);
+  } catch (error) {
+    console.error(error);
+    done(error);
   }
-})
+});
 
-
-//logout 
+//logout
 
 module.exports = router;

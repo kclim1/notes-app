@@ -18,13 +18,10 @@ app.use(expressLayouts);
 app.set("layout", "./layouts/main"); // Ensure the layout path is correct
 app.set("view engine", "ejs");
 
-//importing index.js from routes folder
-app.use("/", require("./server/routes/auth"));
-app.use("/", require("./server/routes/index"));
-app.use(express.urlencoded({ extended: true }));
+// Connect to the database
+mongooseConnect(); 
 
-mongooseConnect(); //connects to database
-
+// Set up session middleware before defining routes
 app.use(
   session({
     secret: process.env.SECRET,
@@ -32,20 +29,26 @@ app.use(
     saveUninitialized: false,
     store: connectMongo.create({
       mongoUrl: process.env.MONGODB_URI,
-      ttl: 14 * 24 * 60 * 60,
+      ttl: 14 * 24 * 60 * 60, // 14 days
     }),
   })
 );
+
+// Initialize Passport
 app.use(passport.initialize());
 app.use(passport.session());
 
-//wildcard to catch all other route params not defined
+// Define routes after session and passport setup
+app.use("/", require("./server/routes/auth"));
+app.use("/", require("./server/routes/index"));
+
+// Wildcard to catch all other route params not defined
 app.get("*", (req, res) => {
   res.status(404).render("page404");
   res.send("something went wrong");
 });
 
-//runs app on port
+// Runs app on port
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);
 });

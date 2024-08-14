@@ -32,7 +32,7 @@ exports.page404 = async (req,res) =>{
 
 exports.login = async (req,res)=>{
     try{
-        console.log('login route hit')
+        console.log('header login button hit')
         res.status(200).render('login')
     }catch(error){
         console.error(error)
