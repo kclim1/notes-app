@@ -48,3 +48,5 @@ exports.signup = async (req,res)=>{
         res.render('page404')
     }
 }
+
+

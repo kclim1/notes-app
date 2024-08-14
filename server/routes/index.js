@@ -10,5 +10,4 @@ router.get('/dashboard',dashboardController.dashboard)
 
 router.get('*',mainController.page404)
 
-
 module.exports = router
