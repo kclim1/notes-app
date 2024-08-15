@@ -27,7 +27,7 @@ router.get(
   "/auth/google/callback",
   passport.authenticate("google", { failureRedirect: "/login" }),
   function (req, res) {
-    res.send("logged in ");
+    res.redirect('/dashboard');
     console.log("google logged in ");
   }
 );
@@ -136,7 +136,7 @@ router.post("/log-in", (req, res, next) => {
           return next(err);
         }
         console.log("successful login");
-        res.redirect("/");
+        res.redirect("/dashboard");
       });
     } catch (error) {
       console.error(error);
@@ -158,7 +158,8 @@ router.get(
   passport.authenticate("github", { failureRedirect: "/login" }),
   function (req, res) {
     // Successful authentication, redirect home.
-    res.send("github login success");
+    console.log("github login success");
+    res.redirect('/dashboard')
   }
 );
 
