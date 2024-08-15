@@ -17,17 +17,20 @@ const bcryptjs = require("bcryptjs");
 router.get("/login", mainController.login);
 router.get("/sign-up", mainController.signup);
 
+//googleauth
 router.get(
   "/auth/google",
   passport.authenticate("google", { scope: ["profile", "email"] })
 );
 
-router.get('/auth/google/callback', 
-  passport.authenticate('google', { failureRedirect: '/login' }),
-  function(req, res) {
-    res.send('logged in ');
-    console.log('google logged in ')
-  });
+router.get(
+  "/auth/google/callback",
+  passport.authenticate("google", { failureRedirect: "/login" }),
+  function (req, res) {
+    res.send("logged in ");
+    console.log("google logged in ");
+  }
+);
 
 passport.use(
   new googleStrategy(
@@ -39,7 +42,7 @@ passport.use(
     async function (accessToken, refreshToken, profile, cb) {
       try {
         let googleUser = await User.findOne({ googleId: profile.id });
-        console.log('google profile :',profile);
+        console.log("google profile :", profile);
         if (!googleUser) {
           googleUser = await User.create({
             googleId: profile.id,
@@ -50,15 +53,17 @@ passport.use(
             loginTime: Date.now(),
           });
         }
-        cb(null,googleUser)
+        cb(null, googleUser);
       } catch (error) {
-        console.error(error)
-        cb(error)
+        console.error(error);
+        cb(error);
       }
     }
   )
 );
+//googleauth
 
+//sign up
 router.post("/sign-up", async (req, res) => {
   try {
     const { username, password, email, firstName, lastName } = req.body;
@@ -92,7 +97,9 @@ router.post("/sign-up", async (req, res) => {
     console.log("not created");
   }
 });
+//sign up
 
+//local
 passport.use(
   new localStrategy(async (username, password, done) => {
     try {
@@ -137,10 +144,49 @@ router.post("/log-in", (req, res, next) => {
     }
   })(req, res, next); // Ensure the authenticate function is invoked correctly
 });
-
-//googleauth
+//local
 
 //github auth
+
+router.get(
+  "/auth/github",
+  passport.authenticate("github", { scope: ["user:email"] })
+);
+
+router.get(
+  "/auth/github/callback",
+  passport.authenticate("github", { failureRedirect: "/login" }),
+  function (req, res) {
+    // Successful authentication, redirect home.
+    res.send("github login success");
+  }
+);
+
+passport.use(
+  new githubStrategy(
+    {
+      clientID: process.env.GITHUB_CLIENT_ID,
+      clientSecret: process.env.GITHUB_SECRET,
+      callbackURL: "http://localhost:3000/auth/github/callback",
+    },
+    async function (accessToken, refreshToken, profile, done) {
+      try {
+        let githubUser = await User.findOne({ githubId: profile.id });
+        if (!githubUser) {
+          githubUser = await User.create({
+            githubId: profile.id,
+            username: profile.username,
+            githubUrl: profile.profileUrl,
+          });
+        }
+        done(null,githubUser) 
+      } catch (error) {
+        console.error(error);
+        done(error);
+      }
+    }
+  )
+);
 
 //serialize and deserealize
 passport.serializeUser((user, done) => {
