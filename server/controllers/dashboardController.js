@@ -1,3 +1,9 @@
+const path = require('path')
+const mongoose = require('mongoose')
+const notes = require(path.join(__dirname, '..', 'config', 'notes'))
+
+
+
 exports.dashboard = async (req, res) => {
     try {
       const locals = {
@@ -5,6 +11,7 @@ exports.dashboard = async (req, res) => {
         description: "A full stack notes app dashboard"
       };
       res.render('dashboard', {
+       
         locals,
         layout: 'layouts/dashboard' // Specify the dashboard layout
       });
@@ -12,4 +19,4 @@ exports.dashboard = async (req, res) => {
       res.status(500).send("error loading dashboard");
     }
   };
-  
+

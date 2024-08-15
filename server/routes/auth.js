@@ -14,6 +14,17 @@ const crypto = require("crypto");
 const secret = crypto.randomBytes(64).toString("hex");
 const bcryptjs = require("bcryptjs");
 
+
+
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  console.log('user not authenticated.redirected to login')
+  res.redirect('/login');
+}
+
+
 router.get("/login", mainController.login);
 router.get("/sign-up", mainController.signup);
 
@@ -172,11 +183,13 @@ passport.use(
     },
     async function (accessToken, refreshToken, profile, done) {
       try {
+        console.log('github' , profile)
         let githubUser = await User.findOne({ githubId: profile.id });
         if (!githubUser) {
           githubUser = await User.create({
             githubId: profile.id,
             username: profile.username,
+            displayName:profile.displayName,
             githubUrl: profile.profileUrl,
           });
         }
@@ -224,6 +237,7 @@ router.get('/log-out',(req,res,next)=>{
   })
 })
 
+router.get('/dashboard', ensureAuthenticated, dashboardController.dashboard);
 
 
 module.exports = router;
