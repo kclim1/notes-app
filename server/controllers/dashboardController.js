@@ -9,6 +9,16 @@ exports.dashboard = async (req, res) => {
       let perPage = 12 
       let page = parseInt(req.query.page) || 1 //current page 
 
+      //determine sort option 
+      let sortOption = {}
+      if (req.query.sort && req.query.sort.startsWith('-')){
+        sortOption[req.query.sort.slice(1)] = -1 //descending 
+      }else if(req.query.sort){
+        sortOption[req.query.sort] = 1 //ascending 
+      }else{
+        sortOption['createdAt'] = -1 //default descending 
+      }
+
       const userNotes = await notes.aggregate([
         {$match: {user:req.user.id} },
         {$sort:{createdAt:-1}},
