@@ -11,6 +11,7 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="/css/notepad.css" />
     <link rel="stylesheet" href="/css/styles.css" />
     <link rel="stylesheet" href="/css/dashboard.css" />
     <script
@@ -23,17 +24,40 @@
   </head>
 
   <body class="homepage d-flex flex-column h-100">
-   
-      <header class="w-100"><%- include('../partials/header.ejs')%></header>
-      <main class="content"><%- body%></main>
-      
-      <footer class="w-100"> <%- include('../partials/footer.ejs') %>
-      </footer>
-   
+    <header class="w-100"><%- include('../partials/header.ejs')%></header>
+    <main class="content"><%- body%></main>
+
+    <footer class="w-100"><%- include('../partials/footer.ejs') %></footer>
+
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+    <!-- Initialize Typed.js -->
+    <script>
+      const options = {
+        strings: [
+          "Wait, I think I forgot something....",
+          "Aha!",
+          "Share your notes!",
+          "Edit with your friends!",
+          "Try Notes for FREE!",
+        ],
+        typeSpeed: 50, // Typing speed in milliseconds
+        backSpeed: 25, // Backspacing speed in milliseconds
+        backDelay: 1500, // Time before starting to backspace
+        startDelay: 500, // Time before typing starts
+        loop: true, // Loop the typing animation
+        showCursor: true, // Show blinking cursor
+        cursorChar: "|", // Blinking cursor character
+      };
+
+      const typed = new Typed("#typedText", options);
+    </script>
+
   </body>
 </html>

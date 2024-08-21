@@ -1,17 +1,26 @@
 <div class="container-fluid container-fluid-custom py-md-5 mb-5">
   <main>
     <div class="row py-md-5 text-center justify-content-center">
-      <div class="col-md-12 col-lg-6 mb-6 mb-md-0">
-        <h1 display-2 fw-bold mb-4 position-relative>
-          Thoughts come and go. Write them down.
-        </h1>
-        <p class="display-5 fw-semibold">Try it for <strong class="btn btn-info btn-lg freeButton display-5"><a href="/auth/google">free </a></strong></p>
+      <div class="col-12 col-md-6 d-flex align-items-center justify-content-center">
+        <div>
+          <h1 class="display-2 fw-bold mb-4 position-relative">
+            Thoughts come and go. Write them down.
+          </h1>
+          <!-- <p class="display-5 fw-semibold">Try it for free!</p> -->
+        </div>
+      </div>
 
+      <div class="col-12 col-md-6 d-flex align-items-center justify-content-center mt-4 mt-md-0">
+        <div class="notepad">
+          <div class="header">
+              <div class="btn btn-close"></div>
+              <div class="btn btn-shrink"></div>
+          </div>
+          <div class="content">
+              <div class="text-typing" id="typedText"></div>
+          </div>
+        </div>
       </div>
     </div>
   </main>
 </div>
-
-<div class="container d-flex justify-content-center">
-    <img src="/img/bee.webp" alt="picture-of-bee-taking-notes" height="400px" width="400px" class='img-fluid'style="border-radius: 45%;">
-  </div>

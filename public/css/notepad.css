@@ -1,0 +1,55 @@
+.notepad {
+    background-color: #fff;
+    width: 450px;
+    height: 300px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Increased shadow for more prominence */
+    position: relative;
+    padding: 10px;
+}
+.notepad .header {
+    display: flex;
+    justify-content: flex-start;
+    padding-bottom: 5px;
+    background-color: #E0E0E0; 
+    padding: 5px 10px; /* Added padding for spacing */
+    border-top-left-radius: 10px; /* Rounded corners for the header */
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom: 1px solid #ddd;
+    height: 2rem;
+}
+.notepad .header .btn {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    margin-right: 5px;
+    padding: 0;
+}
+.notepad .header .btn-close {
+    background-color: red;
+}
+.notepad .header .btn-shrink {
+    background-color: yellow;
+}
+.notepad .content {
+    padding: 10px;
+    position: relative;
+    overflow: hidden;
+    text-align: left;
+}
+#typedText {
+    display: inline; /* Ensures the cursor is on the same line as the text */
+    font-family: inherit; /* Inherit font styles from the parent element */
+    font-size: inherit; /* Match the font size */
+    font-size: 1.5rem;
+}
+
+.typed-cursor {
+    font-size: 1.5rem; /* Match the font size or adjust separately */
+    line-height: 1; /* Ensure the cursor aligns vertically with text */
+    vertical-align: center; 
+    color: #333; /* Optional: Match cursor color with text */
+}
