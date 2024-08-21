@@ -46,3 +46,16 @@ exports.dashboard = async (req, res) => {
     }
   };
 
+  // exports.addNote = 
+
+  //gets all notes
+  exports.notes = async(req,res)=>{
+    try{
+      const userNotes = await notes.find({user: req.user.id})
+      res.render('dashboard', {userNotes: userNotes})
+    }catch(error){
+      console.error(error)
+      res.status(500).render('page404')
+    }
+  }
+

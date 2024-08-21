@@ -27,6 +27,9 @@ function ensureAuthenticated(req, res, next) {
 
 router.get("/login", mainController.login);
 router.get("/sign-up", mainController.signup);
+router.post("/dashboard/note/add",ensureAuthenticated, mainController.addNote);
+router.get("/dashboard/notes",ensureAuthenticated, mainController.notes);
+router.get("/dashboard/notes/:id",ensureAuthenticated, mainController.notes);
 
 //googleauth
 router.get(
