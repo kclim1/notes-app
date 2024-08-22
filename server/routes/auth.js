@@ -27,9 +27,10 @@ function ensureAuthenticated(req, res, next) {
 
 router.get("/login", mainController.login);
 router.get("/sign-up", mainController.signup);
-router.post("/dashboard/note/add",ensureAuthenticated, mainController.addNote);
-router.get("/dashboard/notes",ensureAuthenticated, mainController.notes);
-router.get("/dashboard/notes/:id",ensureAuthenticated, mainController.notes);
+router.get("/dashboard/note/add",ensureAuthenticated, dashboardController.addNotePage);
+router.post("/dashboard/note/add",ensureAuthenticated, dashboardController.addNote);
+router.get("/dashboard/notes",ensureAuthenticated, dashboardController.notes); //done 
+router.get("/dashboard/notes/:id",ensureAuthenticated, dashboardController.notes); //redirect them to addnote page 
 
 //googleauth
 router.get(

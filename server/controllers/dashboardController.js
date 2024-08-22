@@ -46,7 +46,18 @@ exports.dashboard = async (req, res) => {
     }
   };
 
-  // exports.addNote = 
+  exports.addNote = async(req,res)=>{
+    try{
+      const newNote = await notes.create({
+        user : req.user.id,
+        title: req.body.title,
+        body : req.body.body
+      })
+    }catch(error){
+      console.error(error)
+      res.status(500).render('page404')
+    }
+  }
 
   //gets all notes
   exports.notes = async(req,res)=>{
@@ -59,3 +70,14 @@ exports.dashboard = async (req, res) => {
     }
   }
 
+exports.addNotePage = async (req,res)=>{
+  try{
+    res.render('addNote.ejs',{
+      layout : 'layouts/dashboard'
+    })
+  }
+  catch(error){
+    console.error(error)
+    res.render('page404')
+  }
+}
