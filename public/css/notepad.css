@@ -53,3 +53,8 @@
     vertical-align: center; 
     color: #333; /* Optional: Match cursor color with text */
 }
+.notepad .header .btn-shrink::before {
+    content: '-'; /* '-' for minimize button */
+    font-size: 2rem; /* Increase the size of the '-' symbol */
+    line-height: 0.6;
+}
