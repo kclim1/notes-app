@@ -4,15 +4,73 @@
   rel="stylesheet"
 />
 
-<div class="editor-container">
-  <div id="editor">
-    <h2>Demo Content</h2>
-    <p>Preset build with <code>snow</code> theme, and some common formats.</p>
-  </div>
+<!-- <div class="container">
+    <form method="POST" action="/dashboard/note/add" class="d-inline-block m-1">
+        <div class="editor-container">
+            <div id="editor"></div>
+        </div>
+
+        <div class="d-flex justify-content-center align-items-center p-1">
+            <button type="submit" class="saveButton btn btn-success">Save</button>
+        </div>
+    </form>
+
+        
+
+        <form method="POST" action="/dashboard/note/delete" class="d-inline-block m-1">
+            <button type="submit" class="deleteButton btn btn-danger">Delete</button>
+        </form>
+    </div>
+</div> -->
+
+<div class="container">
+    <form method="POST" action="/dashboard/note/add">
+        <div class="title-bar">
+            <span class="title">
+                <input class="titleInput" placeholder="Enter title here...">
+            </span>
+            <button type="submit" class="save btn btn-success">Save</button>
+        </div>
+        <div class="editor-container">
+            <div id="editor"></div>
+        </div>
+    </form>
+
+    <span class="buttons">
+            <span id="toggle-dark-mode" class="darkButton btn btn-secondary m-1">Toggle Dark Mode</span>
+            <form method="POST" action="/dashboard/note/delete" class="d-inline-block m-1">
+                <button type="submit" class="deleteButton btn btn-danger">Delete</button>
+            </form>
+    </span>
 </div>
+
+
+
+
+
+
+
 
 <script>
   const quill = new Quill("#editor", {
     theme: "snow",
+    placeholder: "Start typing here...",
+    modules: {
+      toolbar: [
+        [{ 'size': ['small', false, 'large', 'huge'] }],
+        [{ 'font': ['serif', 'monospace', 'cursive'] }],
+        ["bold", "italic", "underline", "strike"],
+        [{ list: "ordered" }, { list: "bullet" }],
+        [{ align: [] }],
+        ["link", "image", "blockquote", "code-block","video"],
+        [{ color: [] }, { background: [] }], // Dropdowns for text color and background color
+        ["clean"], // Remove formatting button
+      ],
+    },
+  });
+
+  const toggleDarkModeButton = document.getElementById("toggle-dark-mode");
+  toggleDarkModeButton.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
   });
 </script>
