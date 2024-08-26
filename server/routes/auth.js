@@ -38,14 +38,7 @@ router.get(
   passport.authenticate("google", { scope: ["profile", "email"] })
 );
 
-router.get(
-  "/auth/google/callback",
-  passport.authenticate("google", { failureRedirect: "/login" }),
-  function (req, res) {
-    res.redirect('/dashboard');
-    console.log("google logged in ");
-  }
-);
+
 
 passport.use(
   new googleStrategy(
@@ -56,11 +49,11 @@ passport.use(
     },
     async function (accessToken, refreshToken, profile, cb) {
       try {
-        let googleUser = await User.findOne({ googleId: profile.id });
+        let googleUser = await User.findOne({ profileId : profile.id });
         console.log("google profile :", profile);
         if (!googleUser) {
           googleUser = await User.create({
-            googleId: profile.id,
+            profileId: profile.id,
             username: profile.displayName,
             email: profile.emails[0].value,
             familyName: profile.name.familyName,
@@ -75,6 +68,14 @@ passport.use(
       }
     }
   )
+);
+router.get(
+  "/auth/google/callback",
+  passport.authenticate("google", { failureRedirect: "/login" }),
+  function (req, res) {
+    res.redirect('/dashboard');
+    console.log("google logged in ");
+  }
 );
 //googleauth
 
