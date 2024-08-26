@@ -5,9 +5,13 @@ const notes = require(path.join(__dirname, '..', 'config', 'notes'));
 
 const notesSchema = new mongoose.Schema({
   user: {
-    type: mongoose.Schema.Types.ObjectId,
+    type : String,
     ref: "User",
     required: true
+  },
+  profileId : {
+    type : String,
+    ref : "User"
   },
   title: {
     type: String,
@@ -15,7 +19,7 @@ const notesSchema = new mongoose.Schema({
   },
   body: {
     type: String,
-    required: true
+    required: false
   }
 }, { timestamps: true }); // Pass the timestamps option here
 

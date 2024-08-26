@@ -17,6 +17,11 @@ const UserSchema = new mongoose.Schema({
     required: false,
     unique: false,
   },
+  profileId: { 
+    type: String, 
+    required: false,
+    unique: true },
+  
   loginTime: {
     type: Date,
     default: Date.now,
@@ -27,8 +32,12 @@ const UserSchema = new mongoose.Schema({
     default: Date.now,
     required: false,
   },
-  givenName: { type: String, required: false },
-  familyName: { type: String, required: false },
+  givenName: { 
+    type: String,
+    required: false },
+  familyName: { 
+    type: String, 
+    required: false },
 });
 
 const User = mongoose.model("User", UserSchema);
