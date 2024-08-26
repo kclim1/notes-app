@@ -42,7 +42,7 @@ exports.dashboard = async (req, res) => {
       });
     } catch (error) {
       console.error(error)
-      res.status(500).send("error loading dashboard");
+      res.render('authenticated404',{layout : 'layouts/dashboard'})
     }
   };
 
@@ -58,7 +58,7 @@ exports.dashboard = async (req, res) => {
       res.redirect('/dashboard/notes')
     }catch(error){
       console.error(error)
-      res.status(500).render('page404')
+      res.render('authenticated404',{layout : 'layouts/dashboard'})
     }
   }
 
@@ -89,7 +89,7 @@ exports.dashboard = async (req, res) => {
         });
     } catch (error) {
         console.error(error);
-        res.status(500).render('page404');
+        res.render('authenticated404',{layout : 'layouts/dashboard'})
     }
 };
 
@@ -102,7 +102,10 @@ exports.addNotePage = async (req,res)=>{
   }
   catch(error){
     console.error(error)
-    res.render('page404')
+    rres.render('authenticated404',{layout : 'layouts/dashboard'})
   }
 }
 
+exports.authenticated404 = async (req,res)=>{
+  res.render('authenticated404',{layout : 'layouts/dashboard'})
+}
