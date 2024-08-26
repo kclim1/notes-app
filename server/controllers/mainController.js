@@ -26,9 +26,21 @@ exports.reviews = async(req,res)=>{
         res.status(500).send("error loading reviews")
     }
 }
-exports.page404 = async (req,res) =>{
-    res.status(404).render('page404')
-}
+// exports.page404 = async (req,res) =>{
+//     res.status(404).render('page404')
+// }
+exports.page404 = async (req, res) => {
+    if (req.isAuthenticated && req.isAuthenticated()) {
+        // User is authenticated, render the authenticated 404 page
+        res.status(404).render('authenticated404', {
+            layout: 'layouts/dashboard' // Use the authenticated layout
+        });
+    } else {
+        // User is not authenticated, render the regular 404 page
+        res.status(404).render('page404');
+    }
+};
+
 
 exports.login = async (req,res)=>{
     try{
