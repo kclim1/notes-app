@@ -20,14 +20,14 @@ exports.dashboard = async (req, res) => {
       }
 
       const userNotes = await notes.aggregate([
-        {$match: {user:req.user.id} },
+        {$match: {user:req.user.profileId} },
         {$sort:{createdAt:-1}},
         {$skip : (perPage * page) - perPage},
         {$limit : perPage}
       ])
-
-      const count = await notes.countDocuments({user:req.user.id})
-
+      const count = await notes.countDocuments({user:req.user.profileId})
+      console.log("Profile ID :",req.user.profileId)
+      const totalPages = Math.ceil(count / perPage);
       const locals = {
         title: "Dashboard",
         description: "A full stack notes app dashboard"
@@ -36,8 +36,8 @@ exports.dashboard = async (req, res) => {
         username : req.user.username,
         notes : userNotes,
         locals,
-        current:page,
-        totalPages : Math.ceil(count/perPage),
+        current: page,
+        totalPages : totalPages,
         layout: 'layouts/dashboard' // Specify the dashboard layout
       });
     } catch (error) {
@@ -48,11 +48,14 @@ exports.dashboard = async (req, res) => {
 
   exports.addNote = async(req,res)=>{
     try{
+      console.log(req.body)
       const newNote = await notes.create({
-        user : req.user.id,
+        user : req.user.profileId,
+        profileId : req.user.profileId,
         title: req.body.title,
-        body : req.body.body
+        body : req.body.body,
       })
+      res.redirect('/dashboard/notes')
     }catch(error){
       console.error(error)
       res.status(500).render('page404')
@@ -60,15 +63,36 @@ exports.dashboard = async (req, res) => {
   }
 
   //gets all notes
-  exports.notes = async(req,res)=>{
-    try{
-      const userNotes = await notes.find({user: req.user.id})
-      res.render('dashboard', {userNotes: userNotes})
-    }catch(error){
-      console.error(error)
-      res.status(500).render('page404')
+  exports.notes = async(req, res) => {
+    try {
+        let perPage = 12; 
+        let page = parseInt(req.query.page) || 1;
+
+        // Fetch the total count of notes for the user
+        const count = await notes.countDocuments({ user: req.user.profileId });
+      console.log("user profileId:",req.user.profileId)
+        // Fetch the notes for the current page
+        const userNotes = await notes.find({ user: req.user.profileId})
+            .skip((perPage * page) - perPage) // Skip the previous pages
+            .limit(perPage); // Limit the result to the notes per page
+        
+        // Calculate the total number of pages
+        const totalPages = Math.ceil(count / perPage);
+
+        // Render the dashboard view, passing the necessary variables
+        res.render('dashboard', {
+            notes: userNotes,
+            username: req.user.username,
+            current: page,
+            totalPages: totalPages, // Pass totalPages to the view
+            layout: 'layouts/dashboard'
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).render('page404');
     }
-  }
+};
+
 
 exports.addNotePage = async (req,res)=>{
   try{
@@ -81,3 +105,4 @@ exports.addNotePage = async (req,res)=>{
     res.render('page404')
   }
 }
+
