@@ -82,3 +82,63 @@ nav-link{
     gap: 10px;
     margin-top: 10px;
 }
+
+.notes-container-dashboard{
+    background-color: #ccc;
+}
+.card {
+    height: 300px; /* Fixed height for all cards */
+    overflow: hidden; /* Prevent content from overflowing outside the card */
+    background-color: #f9f9f9; /* Light background color */
+    border-radius: 10px; /* Rounded corners for a softer look */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Distribute content evenly */
+    padding: 15px; /* Padding inside the card */
+    transition: box-shadow 0.3s ease; /* Smooth transition for the shadow effect */
+  }
+  
+  .card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6); /* Enhanced shadow on hover */
+  }
+  
+  .card-body {
+    flex-grow: 1; /* Allow the body to take up available space */
+    white-space: pre-wrap; /* Preserve white spaces, tabs, and new lines */
+    overflow-y: auto; /* Add vertical scrollbar if content overflows */
+    font-family: 'Courier New', Courier, monospace; /* Monospace font for tabbed content */
+    margin-top: 10px; /* Add space between the title and the body */
+    /* border-bottom: 1px solid #ddd; Horizontal line between the title and body */
+    padding-top: 10px; /* Space between the border and body text */
+  }
+  
+  .card-title {
+    font-size: 1.25rem; /* Slightly larger font size */
+    font-weight: bold; /* Bold text */
+    margin-bottom: 10px; /* Space below the title */
+  }
+  
+  .card-footer {
+    text-align: right; /* Align the footer to the right */
+    padding-left: 5px;
+  }
+  
+  .card-footer .btn {
+    /* background-color: #007bff; Primary button color */
+    color: white; /* White text */
+    padding: 5px 10px; /* Button padding */
+    border-radius: 5px; /* Rounded button corners */
+    text-decoration: none; /* Remove underline from links */
+    border: 2px solid black;
+    width: 5rem;
+  }
+  
+  .card-footer .btn:hover {
+    background-color: #0056b3; /* Darker color on hover */
+  }
+  
+  .card-footer i.fa-trash {
+    margin-right: 15px; /* Add space between the icon and the button */
+  }
+  
