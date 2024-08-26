@@ -120,14 +120,18 @@ nav-link{
   }
   
   .card-footer {
-    text-align: right; /* Align the footer to the right */
-    padding-left: 5px;
-  }
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-top: 1px solid #e9ecef;
+}
   
   .card-footer .btn {
     /* background-color: #007bff; Primary button color */
     color: white; /* White text */
-    padding: 5px 10px; /* Button padding */
+    padding: 5px 15px; /* Button padding */
     border-radius: 5px; /* Rounded button corners */
     text-decoration: none; /* Remove underline from links */
     border: 2px solid black;
@@ -139,6 +143,148 @@ nav-link{
   }
   
   .card-footer i.fa-trash {
-    margin-right: 15px; /* Add space between the icon and the button */
+    margin-right: 20px; /* Add space between the icon and the button */
   }
+  
+  .trashButton {
+    color: #dc3545; /* Red color for the delete button */
+    font-size: 1.5rem; /* Adjust the size of the trash icon */
+    cursor: pointer; /* Make the cursor a pointer to indicate it's clickable */
+    transition: color 0.3s ease, transform 0.3s ease; /* Smooth transition */
+}
+
+.trashButton:hover {
+    color: #c82333; /* Darker red on hover */
+    transform: scale(1.2); /* Slightly enlarge the icon on hover */
+}
+
+.btn-info {
+    background-color: #17a2b8;
+    border: none;
+    color: #fff;
+    padding: 5px 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-info:hover {
+    background-color: #138496; /* Darker shade on hover */
+    transform: scale(1.05); /* Slightly enlarge the button on hover */
+}
+
+.sortButton {
+    background-color: #17a2b8;
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.sortButton:hover {
+    background-color: #138496; /* Darker shade on hover */
+    transform: scale(1.05); /* Slightly enlarge the button on hover */
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); /* Add a subtle shadow on hover */
+}
+
+.sortButton:active {
+    background-color: #117a8b; /* Even darker shade on click */
+    transform: scale(0.98); /* Slightly shrink the button when clicked */
+    box-shadow: none; /* Remove the shadow on click for a pressed effect */
+}
+
+.sortButton:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(23, 162, 184, 0.5); /* Add a focus ring */
+}
+
+.newNoteButton {
+    background-color: #007bff; /* Primary blue color */
+    border: none;
+    color: #fff; /* White text */
+    padding: 10px 20px; /* Add some padding for a larger button */
+    font-size: 1rem; /* Font size consistent with other buttons */
+    font-weight: bold; /* Make the text bold */
+    text-transform: uppercase; /* Make the text uppercase */
+    border-radius: 5px; /* Slightly rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.newNoteButton:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    transform: scale(1.05); /* Slightly enlarge the button on hover */
+}
+
+.newNoteButton:active {
+    background-color: #004080; /* Even darker blue on click */
+    transform: scale(0.98); /* Slightly shrink the button on click */
+}
+
+.newNoteButton:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5); /* Focus ring for accessibility */
+}
+
+
+/* delete button modal styling  */
+
+.modal-header {
+    background-color: #dc3545; /* Red background for header */
+    color: #ffffff; /* White text */
+    border-bottom: none; /* Remove default border */
+  }
+
+  .modal-title {
+    font-size: 1.25rem; /* Larger title text */
+    font-weight: bold; /* Bold title */
+  }
+
+  .btn-close {
+    color: #ffffff; /* White close button */
+    opacity: 0.8; /* Slight transparency */
+  }
+
+  .btn-close:hover {
+    color: #ffffff; /* White close button */
+    opacity: 1; /* Remove transparency on hover */
+  }
+
+  /* Modal Body */
+  .modal-body {
+    font-size: 1rem; /* Standard font size */
+    color: #343a40; /* Dark grey text */
+    background-color: #f8f9fa; /* Light grey background */
+  }
+
+  /* Modal Footer */
+  .modal-footer {
+    border-top: none; /* Remove default border */
+    background-color: #f8f9fa; /* Light grey background */
+  }
+
+  .btn-secondary {
+    background-color: #6c757d; /* Custom grey */
+    border: none;
+    font-weight: bold;
+  }
+
+  .btn-secondary:hover {
+    background-color: #5a6268; /* Darker grey on hover */
+  }
+
+  .btn-danger {
+    background-color: #dc3545; /* Custom red */
+    font-weight: bold;
+  }
+
+  .btn-danger:hover {
+    background-color: #c82333; /* Darker red on hover */
+  }
+
   
