@@ -45,12 +45,7 @@ h6 {
 }
 
 /* button */
-.btn {
-  padding-left: 2rem;
-  padding-right: 2rem;
-  border-radius: 2rem;
-  cursor: pointer;
-}
+
 
 button:hover {
   background-color: darken(var(--bs-primary-rgb), 30%);
@@ -78,7 +73,68 @@ button:hover {
 .login{
   border : 5px solid black;
 }
-  
 .signup{
   border : 5px solid black;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5)
 }
+  
+/* Sign Up Button */
+#signUpButton {
+  background-color: transparent;
+  color: #ffffff; /* White text */
+  border: 2px solid #ffffff; /* White border */
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 5px;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+#signUpButton:hover {
+  background-color: #ffffff; /* White background on hover */
+  color: #000000; /* Black text on hover */
+  transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+#signUpButton:active {
+  background-color: #e0e0e0; /* Light grey on click */
+  color: #000000; /* Black text on click */
+  transform: scale(0.98); /* Slightly shrink on click */
+}
+
+#signUpButton:focus {
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.5); /* Custom focus ring */
+}
+
+/* Login Button */
+#loginButton {
+  background-color: #ffc107; /* Bootstrap warning color (yellow) */
+  color: #000000; /* Black text */
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 5px;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#loginButton:hover {
+  background-color: #e0a800; /* Darker yellow on hover */
+  transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+#loginButton:active {
+  background-color: #c69500;
+  transform: scale(0.98);
+}
+
+
+#loginButton:focus {
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.5); /* Custom focus ring */
+}
+
+
