@@ -31,6 +31,8 @@ router.get("/dashboard/note/add",ensureAuthenticated, dashboardController.addNot
 router.post("/dashboard/note/add",ensureAuthenticated, dashboardController.addNote);
 router.get("/dashboard/notes",ensureAuthenticated, dashboardController.notes); //done 
 router.get("/dashboard/notes/:id",ensureAuthenticated, dashboardController.notes); //redirect them to addnote page 
+// router.get('*', ensureAuthenticated, dashboardController.authenticated404);
+
 
 //googleauth
 router.get(
