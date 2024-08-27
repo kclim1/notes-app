@@ -1,0 +1,64 @@
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
+<link
+  href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css"
+  rel="stylesheet"
+/>
+
+
+<div class="container">
+    <form class="updateForm" method="POST" action="/dashboard/note/<%= note._id%>">
+        <div class="title-bar">
+            <span class="title">
+                <input required name="title" class="titleInput" placeholder="Enter title here..." >
+            </span>
+            <button type="submit" class="save btn btn-success">Save</button>
+        </div>
+        <div class="editor-container">
+            <div id="editor"> value="<%= note.body %>"</div>
+            <input type="hidden" name="body" id="noteBody">
+        </div>
+    </form>
+
+    <span class="buttons">
+            <span id="toggle-dark-mode" class="darkButton btn btn-secondary m-1">Toggle Dark Mode</span>
+    </span>
+</div>
+
+
+<script>
+  const quill = new Quill("#editor", {
+    theme: "snow",
+    placeholder: "Start typing here...",
+    modules: {
+      toolbar: [
+        [{ 'size': ['small', false, 'large', 'huge'] }],
+        [{ 'font': ['serif', 'monospace', 'cursive'] }],
+        ["bold", "italic", "underline", "strike"],
+        [{ list: "ordered" }, { list: "bullet" }],
+        [{ align: [] }],
+        ["link", "image", "blockquote", "code-block","video"],
+        [{ color: [] }, { background: [] }], // Dropdowns for text color and background color
+        ["clean"], // Remove formatting button
+      ],
+    },
+  });
+
+  const toggleDarkModeButton = document.getElementById("toggle-dark-mode");
+  toggleDarkModeButton.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+  });
+
+  const noteTitle = `<%- note.title %>`
+  const noteTitleInput = document.querySelector('.titleInput')
+  noteTitleInput.value = noteTitle
+  const noteBody = `<%- note.body %>`;
+  quill.root.innerHTML = noteBody;
+
+  const form = document.querySelector('.updateForm'); // Ensure you're selecting the correct form
+form.addEventListener('submit', function(event) {
+    const noteBodyInput = document.querySelector('#noteBody');
+    noteBodyInput.value = quill.root.innerHTML;  // Capture the HTML content from Quill
+    console.log(noteBody.value); // This should show the captured content in the console
+});
+
+</script>
