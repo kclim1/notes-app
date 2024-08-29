@@ -1,3 +1,8 @@
+<link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css"
+    />
+
 <div
   class="container-fluid container-fluid-custom pt-3 pb-5 mb-5"
   style="min-height: 70vh; display: flex; flex-direction: column"
@@ -15,7 +20,7 @@
   <!-- Notes Container -->
   <div class="row">
     <% if (notes.length > 0) { %>
-      <% notes.forEach(note => { %>
+      <% notes.forEach(note => { %> <!-- Correct loop definition -->
         <div class="col-md-4 mb-3">
           <div class="card" style="height: 300px;">
             <div class="card-body d-flex flex-column">
@@ -23,10 +28,33 @@
               <p class="card-text"><%- note.body %></p>
             </div>
             <div class="card-footer">
-              <form action="POST" action="">
-                <i class="trashButton fa-solid fa-trash" data-id="<%= note._id %>" data-bs-toggle="modal" data-bs-target="#deleteModal"></i>
-              </form>
+              <!-- Trash icon to open the modal -->
+              <i class="trashButton fa-solid fa-trash" data-id="<%= note._id %>" data-bs-toggle="modal" data-bs-target="#deleteModal<%= note._id %>"></i>
+    
+              <!-- View button -->
               <a href="/dashboard/notes/<%= note._id %>" class="btn btn-info">View</a>
+            </div>
+          </div>
+        </div>
+    
+        <!-- Modal for deleting this specific note -->
+        <div class="modal fade" id="deleteModal<%= note._id %>" tabindex="-1" aria-labelledby="deleteModalLabel<%= note._id %>" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="deleteModalLabel<%= note._id %>">Delete Note?</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                Are you sure you want to delete this note? This action cannot be undone.
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <!-- Delete form -->
+                <form method="POST" action="/dashboard/notes/<%= note._id %>/delete?_method=DELETE">
+                  <button type="submit" class="deleteButton btn btn-danger" id="confirmDeleteButton">Delete</button>
+                </form>
+              </div>
             </div>
           </div>
         </div>
@@ -36,6 +64,7 @@
         <p>No Notes found. <a href="/dashboard/note/add">Create one now!</a></p>
       </div>
     <% } %>
+    
   </div>
 </div>
 
@@ -79,22 +108,35 @@
   </nav>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<!-- Modal -->
-<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Note?</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        Are you sure you want to delete this note? This action cannot be undone.
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="deleteButton btn btn-danger" id="confirmDeleteButton">Delete</button>
-      </div>
-    </div>
-  </div>
-</div>
+<script>
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.has('deleted')) {
+    Swal.fire({
+      title: 'Note Deleted!',
+      text: 'Your note has been successfully deleted.',
+      icon: 'success',
+      confirmButtonText: 'OK',
+      confirmButtonColor: '#4CAF50',
+      background: '#fff',
+      iconColor: '#4CAF50',
+      position: 'center',
+      showClass: {
+        popup: 'swal2-show'
+      },
+      hideClass: {
+        popup: 'swal2-hide'
+      },
+      customClass: {
+        popup: 'shadow-lg',
+        title: 'fw-bold',
+        confirmButton: 'btn btn-success'
+      }
+    });
+    window.history.replaceState({}, document.title, window.location.pathname);
+  }
+</script>
+
+
+ 
