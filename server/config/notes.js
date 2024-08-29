@@ -1,6 +1,4 @@
 const mongoose = require("mongoose");
-const path = require('path')
-const notes = require(path.join(__dirname, '..', 'config', 'notes'));
 
 
 const notesSchema = new mongoose.Schema({
