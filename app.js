@@ -9,6 +9,9 @@ const session = require("express-session");
 const passport = require("passport");
 const connectMongo = require("connect-mongo");
 const user = require(path.join(__dirname, "server", "config", "db"));
+const methodOverride = require('method-override');
+
+app.use(methodOverride('_method'));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
