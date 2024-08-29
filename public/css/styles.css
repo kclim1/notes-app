@@ -62,13 +62,7 @@ button:hover {
   --bs-pagination-active-border-color: var(--bs-primary-rgb);
 }
 
-.freeButton a {
-    color: rgb(18, 41, 108);
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 2rem;
-    /* color:white; */
-}
+
 
 .login{
   border : 5px solid black;
@@ -138,3 +132,20 @@ button:hover {
 }
 
 
+/* 404page */
+.error-icon {
+  display: block; /* Center the image */
+  margin: 0 auto; /* Center the image horizontally */
+  width: 300px; /* Set a smaller width */
+  height: auto; /* Maintain aspect ratio */
+  margin-top: 20px; /* Add some space above */
+  margin-bottom: 20px; /* Add space below */
+}
+
+.freeButton a {
+  color: rgb(18, 41, 108);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 2rem;
+  /* color:white; */
+}
