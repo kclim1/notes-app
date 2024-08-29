@@ -68,9 +68,13 @@
         </div>
       <% }) %>
     <% } else { %>
-      <div class="col ps-5">
-        <p>No Notes found. <a href="/dashboard/note/add">Create one now!</a></p>
+      <div class="col ps-5 d-flex flex-column align-items-center justify-content-center" style="min-height: 200px;">
+        <p class="empty-notes-message text-center">
+          Your notes list is empty! 
+        </p>
+        <img src="/img/shrug.svg" alt="No Notes Found" class="img-shrug mt-3">
       </div>
+      
     <% } %>
     
   </div>
