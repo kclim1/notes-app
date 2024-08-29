@@ -10,9 +10,13 @@ const passport = require("passport");
 const connectMongo = require("connect-mongo");
 const user = require(path.join(__dirname, "server", "config", "db"));
 const methodOverride = require('method-override');
+const http = require('http'); 
+const socketIo = require('socket.io'); 
+const server = http.createServer(app); 
+const io = socketIo(server); 
+
 
 app.use(methodOverride('_method'));
-
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
@@ -45,13 +49,23 @@ app.use(passport.session());
 app.use("/", require("./server/routes/auth"));
 app.use("/", require("./server/routes/index"));
 
-// Wildcard to catch all other route params not defined
-app.get("*", (req, res) => {
-  res.status(404).render("page404");
-  res.send("something went wrong");
+io.on('connection',(socket)=>{
+  console.log('A user has connected')
+  console.log(socket.id)
+})
+
+
+
+socket.on('disconnect',()=>{
+  console.log('A user has disconnected')
+})
+
+server.listen(port, () => {
+  console.log(`Socket.io server running on port ${port}`);
 });
 
-// Runs app on port
-app.listen(port, () => {
-  console.log(`App listening on port ${port}`);
-});
+
+
+// app.listen(port, () => {
+//   console.log(`App listening on port ${port}`);
+// });
