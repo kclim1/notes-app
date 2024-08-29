@@ -13,6 +13,7 @@ const session = require("express-session");
 const crypto = require("crypto");
 const secret = crypto.randomBytes(64).toString("hex");
 const bcryptjs = require("bcryptjs");
+const mongoose = require('mongoose')
 
 
 
@@ -30,7 +31,10 @@ router.get("/sign-up", mainController.signup);
 router.get("/dashboard/note/add",ensureAuthenticated, dashboardController.addNotePage);
 router.post("/dashboard/note/add",ensureAuthenticated, dashboardController.addNote);
 router.get("/dashboard/notes",ensureAuthenticated, dashboardController.notes); //done 
-router.get("/dashboard/notes/:id",ensureAuthenticated, dashboardController.notes); //redirect them to addnote page 
+router.get("/dashboard/notes/:id",ensureAuthenticated, dashboardController.editNote); //redirect them to addnote page and allow editing 
+router.post('/dashboard/notes/:id',ensureAuthenticated, dashboardController.updateNote)
+router.delete('/dashboard/notes/:id/delete', ensureAuthenticated, dashboardController.deleteNote);
+
 // router.get('*', ensureAuthenticated, dashboardController.authenticated404);
 
 
@@ -84,20 +88,20 @@ router.get(
 //sign up
 router.post("/sign-up", async (req, res) => {
   try {
-    const { username, password, email, firstName, lastName } = req.body;
-
+    const { username, password, email, firstName, lastName  } = req.body;
     if (!username || !password) {
       return res.status(400).send("Username and passwords are required");
     }
 
     const existingUser = await User.findOne({ username });
     if (existingUser) {
-      return res.status(400).send("username already exists");
+      return res.render('page404');
     } else {
       //hash password
       const hashedPassword = await bcryptjs.hash(password, 10);
 
       const newUser = new User({
+        profileId : new mongoose.Types.ObjectId(),
         username,
         password: hashedPassword,
         email,
@@ -105,12 +109,13 @@ router.post("/sign-up", async (req, res) => {
         familyName: lastName,
         dateCreated: Date.now(),
       });
+      console.log(newUser)
       await newUser.save();
-      res.status(201).send("user created");
+      res.redirect("/login")
       console.log("user created");
     }
   } catch (error) {
-    res.status(500).send("error creating user");
+    res.render('page404')
     console.error(error);
     console.log("not created");
   }
@@ -121,6 +126,7 @@ router.post("/sign-up", async (req, res) => {
 passport.use(
   new localStrategy(async (username, password, done) => {
     try {
+      
       const user = await User.findOne({ username });
       if (!user) {
         return done(null, false, { message: "Incorrect username" });
@@ -131,7 +137,7 @@ passport.use(
       }
       return done(null, user);
     } catch (err) {
-      return done(err);
+      return done(err)
     }
   })
 );
@@ -142,21 +148,23 @@ router.post("/log-in", (req, res, next) => {
     try {
       if (err) {
         console.error(err);
+        res.redirect('/page404')
         return next(err);
       }
       if (!user) {
-        res.send("please create account");
         console.log("username not found");
+        return res.redirect('/page404')
       }
       req.logIn(user, (err) => {
         if (err) {
           console.error(err);
-          return next(err);
+          return res.redirect('/page404');
         }
         console.log("successful login");
         res.redirect("/dashboard");
       });
     } catch (error) {
+      res.redirect('/page404')
       console.error(error);
       return next(error); // Added return next to pass the error to the next middleware
     }
@@ -191,10 +199,10 @@ passport.use(
     async function (accessToken, refreshToken, profile, done) {
       try {
         console.log('github' , profile)
-        let githubUser = await User.findOne({ githubId: profile.id });
+        let githubUser = await User.findOne({ profileId: profile.id });
         if (!githubUser) {
           githubUser = await User.create({
-            githubId: profile.id,
+            profileId: profile.id,
             username: profile.username,
             displayName:profile.displayName,
             githubUrl: profile.profileUrl,
