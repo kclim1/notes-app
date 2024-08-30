@@ -7,11 +7,8 @@
 - Running the Application
 - Usage
 - Project Structure
-- API Endpoints
-- Authentication
-- Notes
 - Dependencies
-
+- Known Issues
 ## Overview
 Nimbus is a note-taking app built using Node.js,Express,Mongoose and Atlas. It features Local,Google and Github authentication, basic CRUD operations and is styled with bootstrap. Oh you can also share your notes with your friend and collaborate in realtime. 
 
@@ -209,6 +206,23 @@ notes-app
   ```bash
   npm install nodemon --save-dev
     ```
+
+## Known Issues
+
+- Real-time collaboration may experience slight lag in low-bandwidth conditions. 
+- Errors may occur if logged into two accounts using same browser. Sometimes even a separate browser. It's best to use one in incognito and the other regular. 
+- Dark mode toggle may not persist on page reload.
+
+## List of Key Technologies Used
+
+- **Node.js**: JavaScript runtime built on Chrome's V8 JavaScript engine.
+- **Express.js**: A minimal and flexible Node.js web application framework.
+- **MongoDB**: A NoSQL database for storing user data and notes.
+- **Mongoose**: An ODM (Object Data Modeling) library for MongoDB and Node.js.
+- **Passport.js**: Middleware for user authentication supporting various strategies, including local, Google, and GitHub.
+- **Socket.io**: A JavaScript library for real-time, bidirectional communication between web clients and servers.
+- **Bootstrap**: A popular CSS framework for responsive design and styling.
+- **SweetAlert**: A library for creating beautiful, customizable, and responsive modals.
 
 
 
