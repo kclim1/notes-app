@@ -387,6 +387,7 @@ notes-app
 - Real-time collaboration may experience slight lag in low-bandwidth conditions. 
 - Errors may occur if logged into two accounts using same browser. Sometimes even a separate browser. It's best to use one in incognito and the other regular. 
 - Dark mode toggle may not persist on page reload.
+-Github auth may not return user's email in response depending on your privacy settings. Best to test with local and google auth. 
 
 ## List of Key Technologies Used
 
