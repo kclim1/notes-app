@@ -219,6 +219,169 @@ notes-app
   npm install quill
     ```
 
+## API endpoints
+### Index routes
+
+
+**Home Page**
+
+   **Endpoint:** `GET ('/)`
+
+   **Description:** Renders the homepage of the application.
+
+   **Response:**
+   - **200 OK:** Returns the HTML content of the homepage.
+   - **500 Internal Server Error:** Returns an error message if there is an issue rendering the homepage.
+---
+**Pricing Page**
+
+   **Endpoint:** `GET ('/pricing')`
+
+   **Description:** Renders the pricing information page for the application.
+
+   **Response:**
+   - **200 OK:** Returns the HTML content of the pricing page.
+   - **Error** Renders page404 which just says "Something went wrong". The real errors are console.logged and handled in a try catch block. 
+---
+**404 Not Found**
+
+   **Endpoint:** `GET *`
+
+   **Description:** Handles all other routes that are not defined. This is a catch-all route for invalid URLs and displays a 404 error page.
+
+   **Response:**
+   - **404 Not Found:** Renders the 404page.
+   ---
+   **Login Page**
+
+   **Endpoint:** `GET /login`
+
+   **Description:** Renders the login page for users to enter their credentials and authenticate.
+
+   **Response:**
+   - **200 OK:** Returns the HTML content of the login page.
+   - **500 Internal Server Error:** Returns an error message if there is an issue rendering the login page.
+   ---
+   **User Login**
+
+   **Endpoint:** `POST /log-in`
+
+   **Description:** Authenticates a user by checking the provided credentials and starts a session if successful. Uses local strategy. 
+
+   **Request Body:**
+   ```json
+   {
+     "username": "string",
+     "password": "string"
+   }
+   ```
+   ---
+   **User Logout**
+
+   **Endpoint:** `GET /log-out`
+
+   **Description:** Logs out the currently authenticated user and ends their session.
+
+   **Response:**
+   - **302 Found:** Redirects to `/` (homepage) after a successful logout.
+   ---
+   **Dashboard**
+
+   **Endpoint:** `GET /dashboard`
+
+   **Description:** Renders the main dashboard page for authenticated users. 
+
+   **Middleware:** `ensureAuthenticated`
+
+   **Response:**
+   - **200 OK:** Returns the HTML content of the dashboard page.
+   - **401 Unauthorized:** Redirects user to login page
+   - **500 Internal Server Error:** Returns an error message if there is an issue rendering the dashboard page.
+   ---
+ **View All Notes**
+
+   **Endpoint:** `GET /dashboard/notes`
+
+   **Description:** Retrieves and displays a list of all notes for the authenticated user on the dashboard.
+
+   **Middleware:** `ensureAuthenticated`
+
+   **Response:**
+   - **200 OK:** Renders users notes on the dashboard. 
+   - **401 Unauthorized:** Redirects to login page
+   - **500 Internal Server Error:** Returns an error message if there is an issue retrieving or rendering the notes.
+   ---
+   **Add New Note Page**
+
+**Endpoint:** `GET /dashboard/note/add`
+
+**Description:** Renders the page where authenticated users can create a new note.
+
+**Middleware:** `ensureAuthenticated`
+
+**Response:**
+- **200 OK:** Returns the HTML content of the add new note page.
+- **401 Unauthorized:** Redirects users to the login page.
+- **500 Internal Server Error:** Returns an error message if there is an issue rendering the add note page.
+
+---
+
+**Add New Note**
+
+**Endpoint:** `POST /dashboard/note/add`
+
+**Description:** Submits the form for creating a new note. Saves the note to the user's account.
+
+**Middleware:** `ensureAuthenticated`
+
+**Request Body:**
+```json
+{
+  "title": "string",
+  "content": "string"
+}
+```
+---
+
+   **View Specific Note**
+
+**Endpoint:** `GET /dashboard/notes/:id`
+
+**Description:** Retrieves and displays the details of a specific note identified by its `id`.
+
+**Middleware:** `ensureAuthenticated`
+
+**Request Parameters:**
+- **id** (string): The unique identifier of the note to be retrieved.
+
+**Response:**
+- **200 OK:** Renders the HTML content of the specific note.
+- **401 Unauthorized:** Redirects users to the login page if they are not authenticated.
+- **404 Not Found:** Returns an error message if the note with the specified `id` does not exist.
+- **500 Internal Server Error:** Returns an error message if there is an issue retrieving or rendering the note.
+
+---
+
+**Update Note**
+
+**Endpoint:** `POST /dashboard/notes/:id`
+
+**Description:** Updates the details of a specific note identified by its `id` with the provided data.
+
+**Middleware:** `ensureAuthenticated`
+
+**Request Parameters:**
+- **id** (string): The unique identifier of the note to be updated.
+
+**Request Body:**
+```json
+{
+  "title": "string",
+  "content": "string"
+}
+```
+
+
 ## Known Issues
 
 - Real-time collaboration may experience slight lag in low-bandwidth conditions. 
