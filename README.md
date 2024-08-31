@@ -14,7 +14,7 @@ Nimbus is a note-taking app built using Node.js,Express,Mongoose and Atlas. It f
 
 ## Features
 - **User Authentication**: Sign up via local passport or sign in via google and github. 
-
+- **Realtime Collaboration**: Share note with multiple users and collaborate together.  
 - **User-friendly Interface**: Simple and straightforward UI with option to turn on dark mode. 
 - **Confirmation Modals**: Custom modals for confirmation from sweetalerts library. 
 
