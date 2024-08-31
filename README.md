@@ -55,7 +55,7 @@ Follow these steps to set up and run the application:
 To try out the realtime collaboration and the CRUD features of this app, I suggest you create at least 2 accounts. Then login to those accounts via 2 separate browsers. **I highly suggest using incognito.** Create a note from either account. The note cannot be shared until after it has been created. Then click "View Note" and you'll see a share button on the bottom right of the text area. Now simply add in a valid email. Once it's shared, you may need to refresh your dashboard for the note to appear. Once it does, feel free to place them side by side and start typing away to collaborate in realtime. Once you're done with that you can delete the note and it'll be removed from both users' dashboard. **Note that you have to create a note first before you can share**
 
 ##Pricing
-![alt text](image.png)
+![tiers](pricing.png)
 Nimbus is free to use for now ! 
 
 ## Project Structure
