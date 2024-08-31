@@ -14,6 +14,7 @@ const crypto = require("crypto");
 const secret = crypto.randomBytes(64).toString("hex");
 const bcryptjs = require("bcryptjs");
 const mongoose = require('mongoose')
+const { body, validationResult } = require('express-validator');
 
 
 
@@ -26,25 +27,51 @@ function ensureAuthenticated(req, res, next) {
 }
 
 
-router.get("/login", mainController.login);
+// Authentication routes
 router.get("/sign-up", mainController.signup);
-router.get("/dashboard/note/add",ensureAuthenticated, dashboardController.addNotePage);
-router.post("/dashboard/note/add",ensureAuthenticated, dashboardController.addNote);
-router.get("/dashboard/notes",ensureAuthenticated, dashboardController.notes); //done 
-router.get("/dashboard/notes/:id",ensureAuthenticated, dashboardController.editNote); //redirect them to addnote page and allow editing 
-router.post('/dashboard/notes/:id',ensureAuthenticated, dashboardController.updateNote)
-router.delete('/dashboard/notes/:id/delete', ensureAuthenticated, dashboardController.deleteNote);
+router.post(
+  '/sign-up',
+  [
+    body('username')
+      .isLength({ min: 6 })
+      .withMessage('Username must be at least 6 characters long'),
+    body('password')
+      .isLength({ min: 8 })
+      .withMessage('Password must be at least 8 characters long'),
+    body('email')
+      .isEmail()
+      .withMessage('Please provide a valid email address'),
+    body('firstName')
+      .notEmpty()
+      .withMessage('First Name is required'),
+    body('lastName')
+      .notEmpty()
+      .withMessage('Last Name is required')
+  ],
+  mainController.postSignUp
+);
+router.get("/login", mainController.login);
+router.post("/log-in", mainController.postLogin);
+router.get('/log-out',mainController.logout)
+// Dashboard routes
+router.get('/dashboard', ensureAuthenticated, dashboardController.dashboard);
 
-// router.get('*', ensureAuthenticated, dashboardController.authenticated404);
+// Note-related routes
+router.get("/dashboard/notes", ensureAuthenticated, dashboardController.notes); 
+router.get("/dashboard/note/add", ensureAuthenticated, dashboardController.addNotePage); 
+router.post("/dashboard/note/add", ensureAuthenticated, dashboardController.addNote); 
+router.get("/dashboard/notes/:id", ensureAuthenticated, dashboardController.viewNote); 
+router.post('/dashboard/notes/:id', ensureAuthenticated, dashboardController.updateNote); 
+router.delete('/dashboard/notes/:id/delete', ensureAuthenticated, dashboardController.deleteNote); 
+router.post('/dashboard/notes/:id/share', ensureAuthenticated, dashboardController.shareNote);
 
 
-//googleauth
+//strategies below 
+
 router.get(
   "/auth/google",
   passport.authenticate("google", { scope: ["profile", "email"] })
 );
-
-
 
 passport.use(
   new googleStrategy(
@@ -83,44 +110,6 @@ router.get(
     console.log("google logged in ");
   }
 );
-//googleauth
-
-//sign up
-router.post("/sign-up", async (req, res) => {
-  try {
-    const { username, password, email, firstName, lastName  } = req.body;
-    if (!username || !password) {
-      return res.status(400).send("Username and passwords are required");
-    }
-
-    const existingUser = await User.findOne({ username });
-    if (existingUser) {
-      return res.render('page404');
-    } else {
-      //hash password
-      const hashedPassword = await bcryptjs.hash(password, 10);
-
-      const newUser = new User({
-        profileId : new mongoose.Types.ObjectId(),
-        username,
-        password: hashedPassword,
-        email,
-        givenName: firstName,
-        familyName: lastName,
-        dateCreated: Date.now(),
-      });
-      console.log(newUser)
-      await newUser.save();
-      res.redirect("/login")
-      console.log("user created");
-    }
-  } catch (error) {
-    res.render('page404')
-    console.error(error);
-    console.log("not created");
-  }
-});
-//sign up
 
 //local
 passport.use(
@@ -142,37 +131,6 @@ passport.use(
   })
 );
 
-//local login
-router.post("/log-in", (req, res, next) => {
-  passport.authenticate("local", (err, user, info) => {
-    try {
-      if (err) {
-        console.error(err);
-        res.redirect('/page404')
-        return next(err);
-      }
-      if (!user) {
-        console.log("username not found");
-        return res.redirect('/page404')
-      }
-      req.logIn(user, (err) => {
-        if (err) {
-          console.error(err);
-          return res.redirect('/page404');
-        }
-        console.log("successful login");
-        res.redirect("/dashboard");
-      });
-    } catch (error) {
-      res.redirect('/page404')
-      console.error(error);
-      return next(error); // Added return next to pass the error to the next middleware
-    }
-  })(req, res, next); // Ensure the authenticate function is invoked correctly
-});
-//local
-
-//github auth
 
 router.get(
   "/auth/github",
@@ -206,6 +164,7 @@ passport.use(
             username: profile.username,
             displayName:profile.displayName,
             githubUrl: profile.profileUrl,
+            email : profile.email
           });
         }
         done(null,githubUser) 
@@ -237,22 +196,6 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
-//logout
-router.get('/log-out',(req,res,next)=>{
-  req.logout((err)=>{
-    if(err){
-      return next(err)
-    }
-    req.session.destroy((err)=>{
-      if(err){
-        return next (err)
-      }
-      res.redirect('/')
-    })
-  })
-})
-
-router.get('/dashboard', ensureAuthenticated, dashboardController.dashboard);
 
 
 module.exports = router;
