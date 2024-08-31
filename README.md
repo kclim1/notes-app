@@ -283,7 +283,7 @@ notes-app
    **Description:** Logs out the currently authenticated user and ends their session.
 
    **Response:**
-   - **302 Found:** Redirects to `/` (homepage) after a successful logout.
+   - **302 Found:** Redirects to `/` homepage after a successful logout.
    ---
    **Dashboard**
 
