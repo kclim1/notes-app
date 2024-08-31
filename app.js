@@ -14,6 +14,7 @@ const http = require('http');
 const socketIo = require('socket.io'); 
 const server = http.createServer(app); 
 const io = socketIo(server); 
+const {body , validationResult} = require ('express-validator')
 
 
 app.use(methodOverride('_method'));
@@ -49,23 +50,27 @@ app.use(passport.session());
 app.use("/", require("./server/routes/auth"));
 app.use("/", require("./server/routes/index"));
 
-io.on('connection',(socket)=>{
-  console.log('A user has connected')
-  console.log(socket.id)
-})
+io.on('connection', (socket) => {
+  console.log('A user has connected', socket.id);
+
+  // Listen for 'note-changes' event from this client
+  socket.on('note-changes', (data) => {
+    socket.broadcast.emit('document-change', data);
+  });
+
+  // Handle user disconnects
+  socket.on('disconnect', () => {
+    console.log('A user has disconnected', socket.id);
+  });
+});
 
 
 
-socket.on('disconnect',()=>{
-  console.log('A user has disconnected')
-})
-
+// Start the server
 server.listen(port, () => {
   console.log(`Socket.io server running on port ${port}`);
 });
 
 
 
-// app.listen(port, () => {
-//   console.log(`App listening on port ${port}`);
-// });
+
