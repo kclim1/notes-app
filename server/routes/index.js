@@ -4,7 +4,7 @@ const mainController = require("../controllers/mainController");
 const dashboardController = require("../controllers/dashboardController");
 
 router.get('/',mainController.homepage)
-router.get('/about',mainController.about)
+router.get('/pricing',mainController.pricing)
 router.get('/reviews',mainController.reviews)
 router.get('/dashboard',dashboardController.dashboard)
 
