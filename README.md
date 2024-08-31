@@ -206,6 +206,12 @@ notes-app
   ```bash
   npm install nodemon --save-dev
     ```
+- **Quill**  
+  **Description:** A powerful, open-source rich text editor built for the web, which provides a WYSIWYG (What You See Is What You Get) editing experience. Quill is designed to be customizable and extendable, making it easy to integrate into any web application for creating and editing content.  
+  **Installation:**  
+  ```bash
+  npm install quill
+    ```
 
 ## Known Issues
 
