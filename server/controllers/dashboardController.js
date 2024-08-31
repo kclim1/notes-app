@@ -1,6 +1,8 @@
 const path = require('path')
 const mongoose = require('mongoose')
 const notes = require(path.join(__dirname, '..', 'config', 'notes'))
+const User = require("../config/user.js");
+
 
 
 
@@ -19,10 +21,16 @@ exports.dashboard = async (req, res) => {
       }
   
       // Use .sort() to sort the documents directly
-      const userNotes = await notes.find({ user: req.user.profileId })
-        .sort(sortOption) // Sort by the determined option
-        .skip((perPage * page) - perPage) // Skip the appropriate number of documents
-        .limit(perPage); // Limit the results to the perPage value
+      const userNotes = await notes.find({
+        $or: [
+          { user: req.user.profileId },
+          { sharedWith: req.user.profileId }
+        ]
+      })
+        .sort(sortOption)
+        .skip((perPage * page) - perPage)
+        .limit(perPage);
+      
 
       const count = await notes.countDocuments({user:req.user.profileId})
       console.log("Profile ID :",req.user.profileId)
@@ -53,6 +61,7 @@ exports.dashboard = async (req, res) => {
         profileId : req.user.profileId,
         title: req.body.title,
         body : req.body.body,
+        sharedWith: [req.user.profileId]
       })
       res.redirect('/dashboard')
     }catch(error){
@@ -61,19 +70,19 @@ exports.dashboard = async (req, res) => {
     }
   }
 
-  exports.editNote = async (req, res) => {
+  exports.viewNote = async (req, res) => {
     try {
       const noteId = req.params.id;
   
       // Find the note by its ID
-      const viewNote = await notes.findById(noteId);
+      const view = await notes.findById(noteId);
   
-      if (!viewNote) {
+      if (!view) {
         // If the note is not found, render a 404 page
         return res.status(404).render('authenticated404', { layout: 'layouts/dashboard' });
       } else {
         // Render the editNote view with the note's data
-        return res.render('editNote', { note : viewNote, layout: 'layouts/dashboard' });
+        return res.render('editNote', { note : view, layout: 'layouts/dashboard' });
       }
     } catch (error) {
       console.error('Error fetching note:', error);
@@ -107,18 +116,17 @@ exports.updateNote = async (req,res)=>{
       console.log("user profileId:",req.user.profileId)
         // Fetch the notes for the current page
         const userNotes = await notes.find({ user: req.user.profileId})
-            .skip((perPage * page) - perPage) // Skip the previous pages
-            .limit(perPage); // Limit the result to the notes per page
+            .skip((perPage * page) - perPage) 
+            .limit(perPage); 
         
         // Calculate the total number of pages
         const totalPages = Math.ceil(count / perPage);
 
-        // Render the dashboard view, passing the necessary variables
         res.render('dashboard', {
             notes: userNotes,
             username: req.user.username,
             current: page,
-            totalPages: totalPages, // Pass totalPages to the view
+            totalPages: totalPages, 
             layout: 'layouts/dashboard'
         });
     } catch (error) {
@@ -144,26 +152,15 @@ exports.authenticated404 = async (req,res)=>{
   res.render('authenticated404',{layout : 'layouts/dashboard'})
 }
 
-// exports.deleteNote = async (req,res)=>{
-//   try{
-//     await notes.deleteOne({_id:req.params.id},{profileId})
-//     console.log('id:',_id,'profileId',profileId)
-//     res.redirect('/dashboard')
-//   }catch(error){
-//     console.error(error)
-//     res.render('authenticated404',{layout : 'layouts/dashboard'})
-//   }
-// }
+
 exports.deleteNote = async (req, res) => {
   try {
       const noteIdToDelete = req.params.id;
       console.log('noteId:', noteIdToDelete) 
       const result = await notes.deleteOne({ _id: req.params.id, user: req.user.profileId });
 
-    // Log the correct variables for debugging
     console.log('Deleted note ID:', req.params.id, 'User profileId:', req.user.profileId);
 
-    // Redirect to the dashboard after successful deletion
     if (result.deletedCount > 0) {
       res.redirect('/dashboard?deleted=true');
 
@@ -174,5 +171,34 @@ exports.deleteNote = async (req, res) => {
   } catch (error) {
     console.error('Error deleting note:', error);
     res.status(500).render('authenticated404', { layout: 'layouts/dashboard' });
+  }
+};
+
+exports.shareNote = async (req, res) => {
+  try {
+    const noteId = req.params.id;
+    const { sharedWith } = req.body; // Get the email from the request body
+
+    // Find the user by email
+    const collaborator = await User.findOne({ email: sharedWith });
+    if (!collaborator) {
+      return res.status(404).json({ error: 'User not found.' }); // Send a JSON response with error
+    }
+
+    const collaboratorProfileId = collaborator.profileId;
+
+    // Update the note to add the collaborator's profileId to the sharedWith array
+    const updatedNote = await notes.findByIdAndUpdate(noteId, {
+      $addToSet: { sharedWith: collaboratorProfileId } // Use the profileId (String)
+    });
+
+    if (!updatedNote) {
+      return res.status(400).json({ error: 'Failed to update note.' }); // Send a JSON response with error
+    }
+
+    res.status(200).json({ message: 'Note shared successfully.' }); // Send a success response in JSON
+  } catch (error) {
+    console.error('Error sharing note:', error);
+    res.status(500).json({ error: 'Internal server error.' }); // Send a JSON response for server errors
   }
 };
