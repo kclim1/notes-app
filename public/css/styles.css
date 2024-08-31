@@ -2,11 +2,13 @@
   --background-color: #ffc700;
   --bs-primary-rgb: #12296c;
 }
+
 html,
 body {
   height: 100%;
   margin: 0;
 }
+
 body {
   font-family: sans-serif;
   background-color: var(--background-color);
@@ -17,38 +19,30 @@ body {
   flex-direction: column;
   min-height: 100vh;
   margin: 0;
-}
-.content {
-  flex: 1 ;
-}
-footer {
-  flex-shrink: 0;
-  height:3.5rem;
-}
-main{
-    flex: 1;
+  min-width: 375px;
+  overflow-x: auto;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+.content {
+  flex: 1;
+}
+
+footer {
+  flex-shrink: 0;
+  height: 3.5rem;
+}
+
+main {
+  flex: 1;
+}
+
+h1, h2, h3, h4, h5, h6 {
   font-family: "Georgia", cursive;
   font-weight: 800;
 }
 
 .container-fluid-custom {
-  /* background-color: aqua; */
   max-width: 1600px;
-}
-
-/* button */
-
-
-button:hover {
-  background-color: darken(var(--bs-primary-rgb), 30%);
 }
 
 .auth-box {
@@ -62,22 +56,19 @@ button:hover {
   --bs-pagination-active-border-color: var(--bs-primary-rgb);
 }
 
-
-
-.login{
-  border : 5px solid black;
+.login {
+  border: 5px solid black;
 }
-.signup{
-  border : 5px solid black;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5)
+
+.signup {
+  border: 5px solid black;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
 }
-  
-/* Sign Up Button */
+
 #signUpButton {
   background-color: transparent;
-  color: #ffffff; /* White text */
-  border: 2px solid #ffffff; /* White border */
-  padding: 10px 20px;
+  color: #ffffff;
+  border: 2px solid #ffffff;
   font-size: 1rem;
   font-weight: bold;
   border-radius: 5px;
@@ -86,26 +77,25 @@ button:hover {
 }
 
 #signUpButton:hover {
-  background-color: #ffffff; /* White background on hover */
-  color: #000000; /* Black text on hover */
-  transform: scale(1.05); /* Slightly enlarge on hover */
+  background-color: #ffffff;
+  color: #000000;
+  transform: scale(1.05);
 }
 
 #signUpButton:active {
-  background-color: #e0e0e0; /* Light grey on click */
-  color: #000000; /* Black text on click */
-  transform: scale(0.98); /* Slightly shrink on click */
+  background-color: #e0e0e0;
+  color: #000000;
+  transform: scale(0.98);
 }
 
 #signUpButton:focus {
   outline: none;
-  box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.5); /* Custom focus ring */
+  box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.5);
 }
 
-/* Login Button */
 #loginButton {
-  background-color: #ffc107; /* Bootstrap warning color (yellow) */
-  color: #000000; /* Black text */
+  background-color: #ffc107;
+  color: #000000;
   border: none;
   padding: 10px 20px;
   font-size: 1rem;
@@ -116,8 +106,8 @@ button:hover {
 }
 
 #loginButton:hover {
-  background-color: #e0a800; /* Darker yellow on hover */
-  transform: scale(1.05); /* Slightly enlarge on hover */
+  background-color: #e0a800;
+  transform: scale(1.05);
 }
 
 #loginButton:active {
@@ -125,21 +115,18 @@ button:hover {
   transform: scale(0.98);
 }
 
-
 #loginButton:focus {
   outline: none;
-  box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.5); /* Custom focus ring */
+  box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.5);
 }
 
-
-/* 404page */
 .error-icon {
-  display: block; /* Center the image */
-  margin: 0 auto; /* Center the image horizontally */
-  width: 300px; /* Set a smaller width */
-  height: auto; /* Maintain aspect ratio */
-  margin-top: 20px; /* Add some space above */
-  margin-bottom: 20px; /* Add space below */
+  display: block;
+  margin: 0 auto;
+  width: 300px;
+  height: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .freeButton a {
@@ -147,5 +134,4 @@ button:hover {
   text-decoration: none;
   font-weight: 600;
   font-size: 2rem;
-  /* color:white; */
 }

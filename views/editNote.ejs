@@ -3,10 +3,21 @@
   href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css"
   rel="stylesheet"
 />
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<style>
+  @media (max-width: 626px) {
+    body {
+      min-width: 626px; 
+      overflow-x: auto; 
+    }
+  }
+</style>
+
 
 
 <div class="container">
-    <form class="updateForm" method="POST" action="/dashboard/notes/<%= note._id%>">
+    <form class="updateForm" method="POST" action="/dashboard/notes/<%= note._id %>">
         <div class="title-bar">
             <span class="title">
                 <input required name="title" class="titleInput" placeholder="Enter title here..." >
@@ -14,51 +25,145 @@
             <button type="submit" class="save btn btn-success">Save</button>
         </div>
         <div class="editor-container">
-            <div id="editor"> value="<%= note.body %>"</div>
+            <div id="editor"></div> 
             <input type="hidden" name="body" id="noteBody">
         </div>
     </form>
 
     <span class="buttons">
-            <span id="toggle-dark-mode" class="darkButton btn btn-secondary m-1">Toggle Dark Mode</span>
+        <span id="toggle-dark-mode" class="darkButton btn btn-secondary m-1">Toggle Dark Mode</span>
+        <button id="shareButton" class="btn btn-primary">Share Note</button>
     </span>
 </div>
 
-
 <script>
-  const quill = new Quill("#editor", {
-    theme: "snow",
-    placeholder: "Start typing here...",
-    modules: {
-      toolbar: [
-        [{ 'size': ['small', false, 'large', 'huge'] }],
-        [{ 'font': ['serif', 'monospace', 'cursive'] }],
-        ["bold", "italic", "underline", "strike"],
-        [{ list: "ordered" }, { list: "bullet" }],
-        [{ align: [] }],
-        ["link",  "blockquote", "code-block"],
-        [{ color: [] }, { background: [] }], // Dropdowns for text color and background color
-        ["clean"], // Remove formatting button
-      ],
-    },
-  });
-
-  const toggleDarkModeButton = document.getElementById("toggle-dark-mode");
-  toggleDarkModeButton.addEventListener("click", () => {
-    document.body.classList.toggle("dark-mode");
-  });
-
-  const noteTitle = `<%- note.title %>`
-  const noteTitleInput = document.querySelector('.titleInput')
-  noteTitleInput.value = noteTitle
-  const noteBody = `<%- note.body %>`;
-  quill.root.innerHTML = noteBody;
-
-  const form = document.querySelector('.updateForm'); // Ensure you're selecting the correct form
-form.addEventListener('submit', function(event) {
-    const noteBodyInput = document.querySelector('#noteBody');
-    noteBodyInput.value = quill.root.innerHTML;  // Capture the HTML content from Quill
-    console.log(noteBody.value); // This should show the captured content in the console
+// Initialize Quill editor
+const quill = new Quill("#editor", {
+  theme: "snow",
+  placeholder: "Start typing here...",
+  modules: {
+    toolbar: [
+      [{ 'size': ['small', false, 'large', 'huge'] }],
+      [{ 'font': ['serif', 'monospace', 'cursive'] }],
+      ["bold", "italic", "underline", "strike"],
+      [{ list: "ordered" }, { list: "bullet" }],
+      [{ align: [] }],
+      ["link", "blockquote", "code-block"],
+      [{ color: [] }, { background: [] }],
+      ["clean"],
+    ],
+  },
 });
 
+// Dark mode toggle
+const toggleDarkModeButton = document.getElementById("toggle-dark-mode");
+toggleDarkModeButton.addEventListener("click", () => {
+  document.body.classList.toggle("dark-mode");
+});
+
+// Set initial title and body
+const noteTitle = `<%- note.title %>`;
+const noteTitleInput = document.querySelector('.titleInput');
+noteTitleInput.value = noteTitle;
+const noteBody = `<%- note.body %>`;
+quill.root.innerHTML = noteBody;
+
+// Handle form submission
+const form = document.querySelector('.updateForm');
+form.addEventListener('submit', function(event) {
+  const noteBodyInput = document.querySelector('#noteBody');
+  noteBodyInput.value = quill.root.innerHTML; // Capture the HTML content from Quill
+  console.log(noteBodyInput.value); // Log captured content
+});
 </script>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  // Connect to the Socket.io server
+  const socket = io();
+  
+  // Debounce function to limit how often the function is called
+  function debounce(func, delay) {
+    let timeout;
+    return function(...args) {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func.apply(this, args), delay);
+    };
+  }
+  
+  // Emit changes to the server with a debounce of 500 milliseconds
+  const emitChanges = debounce(function() {
+    const content = quill.getContents(); // Get the Delta representation of the content
+    socket.emit('note-changes', { content }); // Emit the Delta content to the server
+  }, 500); // Adjust the delay (in milliseconds) as needed
+  
+  quill.on('text-change', (delta, oldDelta, source) => {
+  if (source === 'user') { // Only emit changes triggered by the user
+    socket.emit('note-changes', delta); // Send delta directly
+    console.log('Emitting delta:', delta); // Debugging log to ensure delta is emitted
+  }
+});
+
+// Listen for 'document-change' events from the server
+socket.on('document-change', (delta) => {
+  console.log('Received delta:', delta); // Debugging log to check received delta
+  quill.updateContents(delta, 'api'); // Apply delta using Quill's method
+});
+  </script>
+  
+  <script>
+    document.getElementById('shareButton').addEventListener('click', function() {
+  Swal.fire({
+    title: 'Share Note',
+    input: 'email',
+    inputLabel: 'Enter collaborator\'s email',
+    inputPlaceholder: 'johndoe@example.com',
+    showCancelButton: true,
+    confirmButtonText: 'Share',
+    showLoaderOnConfirm: true,
+    preConfirm: (email) => {
+      console.log('Email entered:', email); 
+      if (!email) {
+        Swal.showValidationMessage('Please enter a valid email');
+        return;
+      }
+
+      return fetch(`/dashboard/notes/<%= note._id %>/share`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ sharedWith: email }),
+      })
+      .then(response => {
+        console.log('Received response:', response); 
+
+        if (!response.ok) {
+          console.error('Response not ok:', response.statusText); 
+          throw new Error('User not found');
+        }
+
+        return response.json(); // Attempt to parse the response as JSON
+      })
+      .then(data => {
+        console.log('Response data:', data); // Log the parsed JSON data
+
+        if (!data.message) {
+          throw new Error(data.error || 'Failed to share the note');
+        }
+        return data;
+      })
+      .catch(error => {
+        console.error('Caught error:', error); 
+        Swal.showValidationMessage(`ERROR`); 
+      });
+    }
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire('Shared!', 'The note has been shared.', 'success');
+    }
+  });
+});
+
+  </script>
+  

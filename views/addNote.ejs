@@ -3,7 +3,14 @@
   href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css"
   rel="stylesheet"
 />
-
+<style>
+  @media (max-width: 626px) {
+    body {
+      min-width: 626px; 
+      overflow-x: auto; 
+    }
+  }
+</style>
 
 <div class="container">
     <form class="saveForm" method="POST" action="/dashboard/note/add">
@@ -56,3 +63,4 @@ form.addEventListener('submit', function(event) {
 });
 
 </script>
+<script src="/socket.io/socket.io.js"></script>

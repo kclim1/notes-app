@@ -38,6 +38,7 @@ const UserSchema = new mongoose.Schema({
   familyName: { 
     type: String, 
     required: false },
+    
 });
 
 const User = mongoose.model("User", UserSchema);

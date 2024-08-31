@@ -1,0 +1,84 @@
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <!-- Free Tier -->
+    <div class="col-12 col-md-4 mb-4">
+      <div class="card h-100 text-center">
+        <div class="card-body d-flex flex-column">
+          <h3 class="card-title">Basic Tier</h3>
+          <hr>
+          <ul class="list-unstyled mt-3 mb-4">
+            <li>Basic Access</li>
+            <li>Unlimited Notes</li>
+            <li>Single Device Access</li>
+          </ul>
+          <button class="btn btn-primary mt-auto" onclick="showAlert()">Choose Basic</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Silver Tier -->
+    <div class="col-12 col-md-4 mb-4">
+      <div class="card h-100 text-center">
+        <div class="card-body d-flex flex-column">
+          <h3 class="card-title">Silver Tier</h3>
+          <hr>
+          <ul class="list-unstyled mt-3 mb-4">
+            <li>Basic Access</li>
+            <li>Unlimited Notes</li>
+            <li>Two Device Access</li>
+          </ul>
+          <button class="btn btn-primary mt-auto" onclick="showAlert()">Choose Silver</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gold Tier -->
+    <div class="col-12 col-md-4 mb-4">
+      <div class="card h-100 text-center">
+        <div class="card-body d-flex flex-column">
+          <h3 class="card-title">Gold Tier</h3>
+          <hr>
+          <ul class="list-unstyled mt-3 mb-4">
+            <li>Basic Access</li>
+            <li>Unlimited Notes</li>
+            <li>Three Device Access</li>
+          </ul>
+          <button class="btn btn-primary mt-auto" onclick="showAlert()">Choose Gold</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function showAlert() {
+    Swal.fire({
+      title: 'Notes app is free for now!',
+      icon: 'info',
+      confirmButtonText: 'OK!'
+    });
+  }
+</script>
+
+<style>
+
+  .card {
+    border: 2px solid #007bff; 
+    background-color: #fff5e1;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); 
+    transition: transform 0.3s ease, box-shadow 0.3s ease; 
+    font-family: 'Roboto', sans-serif;
+    min-width: 250px; 
+    max-width: 350px;
+  }
+
+  .card:hover {
+    transform: translateY(-10px); 
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.8); 
+  }
+</style>

@@ -39,17 +39,13 @@ exports.reviews = async(req,res)=>{
         res.status(500).send("error loading reviews")
     }
 }
-// exports.page404 = async (req,res) =>{
-//     res.status(404).render('page404')
-// }
+
 exports.page404 = async (req, res) => {
     if (req.isAuthenticated && req.isAuthenticated()) {
-        // User is authenticated, render the authenticated 404 page
         res.status(404).render('authenticated404', {
-            layout: 'layouts/dashboard' // Use the authenticated layout
+            layout: 'layouts/dashboard' 
         });
     } else {
-        // User is not authenticated, render the regular 404 page
         res.status(404).render('page404');
     }
 };
@@ -141,7 +137,7 @@ exports.signup = (req, res) => {
       } catch (error) {
         res.redirect('/page404')
         console.error(error);
-        return next(error); // Added return next to pass the error to the next middleware
+        return next(error); 
       }
     })(req, res, next); // Ensure the authenticate function is invoked correctly
   };

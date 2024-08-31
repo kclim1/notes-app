@@ -111,7 +111,6 @@ exports.updateNote = async (req,res)=>{
         let perPage = 12; 
         let page = parseInt(req.query.page) || 1;
 
-        // Fetch the total count of notes for the user
         const count = await notes.countDocuments({ user: req.user.profileId });
       console.log("user profileId:",req.user.profileId)
         // Fetch the notes for the current page
@@ -119,7 +118,6 @@ exports.updateNote = async (req,res)=>{
             .skip((perPage * page) - perPage) 
             .limit(perPage); 
         
-        // Calculate the total number of pages
         const totalPages = Math.ceil(count / perPage);
 
         res.render('dashboard', {

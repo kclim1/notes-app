@@ -1,7 +1,83 @@
 <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css"
-    />
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css"
+/>
+<style>
+  @media (max-width: 596px) {
+    .row {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .col-md-4 {
+      width: 100%;
+      max-width: 400px;
+      margin: 0;
+    }
+
+    .sortButton, .newNoteButton, h1 {
+      display: block;
+      margin: 10px auto;
+      width: fit-content;
+    }
+  }
+
+  @media (min-width: 784px) and (max-width: 940px) {
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .col-md-4 {
+      flex: 1 1 45%;
+      max-width: 300px;
+      margin-bottom: 15px;
+    }
+  }
+
+  @media (max-width: 400px) {
+    .row {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .col-md-4 {
+      width: 90%;
+      max-width: 300px;
+      margin-bottom: 15px;
+    }
+
+    .sortButton, .newNoteButton, h1 {
+      display: block;
+      margin: 10px auto;
+      width: fit-content;
+    }
+  }
+
+  @media (min-width: 607px) and (max-width: 761px) {
+    .row {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .col-md-4 {
+      width: 100%;
+      max-width: 400px;
+      margin-bottom: 15px;
+    }
+
+    .sortButton, .newNoteButton, h1 {
+      display: block;
+      margin: 10px auto;
+      width: fit-content;
+    }
+  }
+</style>
 
 <div
   class="container-fluid container-fluid-custom pt-3 pb-5 mb-5"
@@ -25,10 +101,9 @@
     </div>
   </div>
 
-  <!-- Notes Container -->
   <div class="row">
     <% if (notes.length > 0) { %>
-      <% notes.forEach(note => { %> <!-- Correct loop definition -->
+      <% notes.forEach(note => { %>
         <div class="col-md-4 mb-3">
           <div class="card" style="height: 300px;">
             <div class="card-body d-flex flex-column">
@@ -36,16 +111,12 @@
               <p class="card-text"><%- note.body %></p>
             </div>
             <div class="card-footer">
-              <!-- Trash icon to open the modal -->
               <i class="trashButton fa-solid fa-trash" data-id="<%= note._id %>" data-bs-toggle="modal" data-bs-target="#deleteModal<%= note._id %>"></i>
-    
-              <!-- View button -->
               <a href="/dashboard/notes/<%= note._id %>" class="btn btn-info">View</a>
             </div>
           </div>
         </div>
-    
-        <!-- Modal for deleting this specific note -->
+
         <div class="modal fade" id="deleteModal<%= note._id %>" tabindex="-1" aria-labelledby="deleteModalLabel<%= note._id %>" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
@@ -58,7 +129,6 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <!-- Delete form -->
                 <form method="POST" action="/dashboard/notes/<%= note._id %>/delete?_method=DELETE">
                   <button type="submit" class="deleteButton btn btn-danger" id="confirmDeleteButton">Delete</button>
                 </form>
@@ -74,51 +144,45 @@
         </p>
         <img src="/img/shrug.svg" alt="No Notes Found" class="img-shrug mt-3">
       </div>
-      
     <% } %>
-    
   </div>
 </div>
 
-
-  <!-- paginatoin  -->
-  <nav aria-label="Page navigation" class="mt-auto">
-    <ul class="pagination pagination-lg justify-content-center">
-      <!-- Previous button -->
-      <% if (current > 1) { %>
+<nav aria-label="Page navigation" class="mt-auto">
+  <ul class="pagination pagination-lg justify-content-center">
+    <% if (current > 1) { %>
       <li class="page-item">
         <a class="page-link" href="?page=<%= current - 1 %>">Previous</a>
       </li>
-      <% } else { %>
+    <% } else { %>
       <li class="page-item disabled">
         <a class="page-link">Previous</a>
       </li>
-      <% } %>
+    <% } %>
 
-      <!-- Page numbers -->
-      <% for (let i = 1; i <= totalPages; i++) { %> <% if (i === current) { %>
-      <li class="page-item active">
-        <span class="page-link"><%= i %></span>
-      </li>
+    <% for (let i = 1; i <= totalPages; i++) { %>
+      <% if (i === current) { %>
+        <li class="page-item active">
+          <span class="page-link"><%= i %></span>
+        </li>
       <% } else { %>
-      <li class="page-item">
-        <a class="page-link" href="?page=<%= i %>"><%= i %></a>
-      </li>
-      <% } %> <% } %>
+        <li class="page-item">
+          <a class="page-link" href="?page=<%= i %>"><%= i %></a>
+        </li>
+      <% } %>
+    <% } %>
 
-      <!-- Next button -->
-      <% if (current < totalPages) { %>
+    <% if (current < totalPages) { %>
       <li class="page-item">
         <a class="page-link" href="?page=<%= current + 1 %>">Next</a>
       </li>
-      <% } else { %>
+    <% } else { %>
       <li class="page-item disabled">
         <a class="page-link">Next</a>
       </li>
-      <% } %>
-    </ul>
-  </nav>
-</div>
+    <% } %>
+  </ul>
+</nav>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -156,10 +220,8 @@
       event.preventDefault();
       const sortCriteria = this.getAttribute('data-sort');
       const currentUrl = new URL(window.location.href);
-      currentUrl.searchParams.set('sort', sortCriteria); // Set the sort parameter in the URL
-      window.location.href = currentUrl; // Reload the page with the updated URL
+      currentUrl.searchParams.set('sort', sortCriteria);
+      window.location.href = currentUrl;
     });
   });
 </script>
-
- 

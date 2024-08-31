@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <title><%-locals.title%></title>
     <meta name="description" content="<%- locals.description %>" />
     <link
@@ -18,12 +18,11 @@
       src="https://kit.fontawesome.com/22398e012f.js"
       crossorigin="anonymous"
     ></script>
-    <!-- <link href="public/css/output.css" rel="stylesheet"> -->
-    <!-- <link rel="stylesheet" href="public/css/tailwind.css"> -->
-    <!-- <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet"> -->
+    
   </head>
+  
 
-  <body class="homepage d-flex flex-column h-100">
+  <body class="homepage d-flex flex-column h-100" style="min-width: 375px; overflow-x: auto;">
     <header class="w-100"><%- include('../partials/header.ejs')%></header>
     <main class="content"><%- body%></main>
 

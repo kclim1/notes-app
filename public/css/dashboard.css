@@ -1,312 +1,315 @@
-
-.navbar{
-    /* background-color: lightcoral; */
-    width:100%;
+body {
+  min-width: 596px;
 }
-nav-link{
-    color:white;
+
+.navbar {
+  width: 100%;
+}
+
+nav-link {
+  color: white;
+}
+
+body, .container, .container-fluid {
+  min-width: 576px !important;
 }
 
 .container {
-    /* background-color: aqua; */
-    display: block; /* Change to block for centering */
-    width: 70%; /* Set to full width of the parent container */
-    max-width: 1500px; /* Maximum width to prevent it from stretching too far */
-    margin: 0 auto; /* Center the container horizontally */
-    padding: 20px; /* Optional: add padding for content spacing */
+  display: block;
+  width: 70%;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
 .editor-container {
-    background-color: #f4f4f4;
-    border-radius: 10px;
-    padding: 20px;
-    width: 100%; /* Make it responsive to the container's width */
-    max-width: 1200px; /* Limit the maximum width for readability */
-    margin: 20px auto; /* Center the editor container */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #f4f4f4;
+  border-radius: 10px;
+  padding: 20px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 20px auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .ql-toolbar.ql-snow {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
 .ql-container.ql-snow {
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
 .dark-mode .ql-container.ql-snow {
-    background-color:black; /* Dark background for the editor in dark mode */
-    color: #f4f4f4; /* Light text for contrast */
+  background-color: black;
+  color: #f4f4f4;
 }
 
 #editor {
-    min-height: 400px;
-    width: 100%; /* Ensure the editor takes the full width of the editor-container */
+  min-height: 400px;
+  width: 100%;
 }
 
 .title-bar {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px; 
-    align-items: center; /* Align items vertically in the center */
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  align-items: center;
 }
 
 .titleInput {
-    width: 25rem; /* Make title input take full width within its container */
-    max-width: 600px; /* Set a maximum width to prevent it from becoming too large */
-    margin-right: 20px; /* Add spacing between the input and the save button */
-    border: 1px solid #ccc; /* Light border around the input */
-    border-radius: 8px; /* Rounded corners */
-    background-color: #f9f9f9; /* Slightly off-white background */
-    font-size: 1rem; /* Increase font size for better readability */
-    color: #333; /* Darker text color */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
-    transition: all 0.3s ease;
+  width: 25rem;
+  max-width: 600px;
+  margin-right: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  font-size: 1rem;
+  color: #333;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
 }
+
 .titleInput:focus {
-    border-color: #007bff; /* Change border color on focus */
-    box-shadow: 0 0 8px rgba(0, 123, 255, 0.2); /* Enhance shadow on focus */
-    outline: none; /* Remove default focus outline */
+  border-color: #007bff;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+  outline: none;
 }
 
 .titleInput::placeholder {
-    color: #999; /* Lighter placeholder text */
-    font-style: italic; /* Italicize placeholder text */
+  color: #999;
+  font-style: italic;
 }
 
 .buttons {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
 }
 
-.notes-container-dashboard{
-    background-color: #ccc;
+.notes-container-dashboard {
+  background-color: #ccc;
 }
+
 .card {
-    height: 300px; /* Fixed height for all cards */
-    overflow: hidden; /* Prevent content from overflowing outside the card */
-    background-color: #f9f9f9; /* Light background color */
-    border-radius: 10px; /* Rounded corners for a softer look */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; /* Distribute content evenly */
-    padding: 15px; /* Padding inside the card */
-    transition: box-shadow 0.3s ease; /* Smooth transition for the shadow effect */
-  }
-  
-  .card:hover {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6); /* Enhanced shadow on hover */
-  }
-  
-  .card-body {
-    flex-grow: 1; /* Allow the body to take up available space */
-    white-space: pre-wrap; /* Preserve white spaces, tabs, and new lines */
-    overflow-y: auto; /* Add vertical scrollbar if content overflows */
-    font-family: 'Courier New', Courier, monospace; /* Monospace font for tabbed content */
-    margin-top: 10px; /* Add space between the title and the body */
-    /* border-bottom: 1px solid #ddd; Horizontal line between the title and body */
-    padding-top: 10px; /* Space between the border and body text */
-  }
-  
-  .card-title {
-    font-size: 1.25rem; /* Slightly larger font size */
-    font-weight: bold; /* Bold text */
-    margin-bottom: 10px; /* Space below the title */
-  }
-  
-  .card-footer {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    padding: 10px;
-    background-color: #f8f9fa;
-    border-top: 1px solid #ced4da;
+  width: 100%;
+  max-width: 480px;
+  height: 300px;
+  overflow: hidden;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 15px;
+  transition: box-shadow 0.3s ease;
+  margin: 0;
 }
-  
-  .card-footer .btn {
-    /* background-color: #007bff; Primary button color */
-    color: white; /* White text */
-    padding: 5px 15px; /* Button padding */
-    border-radius: 5px; /* Rounded button corners */
-    text-decoration: none; /* Remove underline from links */
-    border: 2px solid black;
-    width: 5rem;
-  }
-  
-  .card-footer .btn:hover {
-    background-color: #0056b3; /* Darker color on hover */
-  }
-  
-  .card-footer i.fa-trash {
-    margin-right: 20px; /* Add space between the icon and the button */
-  }
-  
-  .trashButton {
-    color: #dc3545; /* Red color for the delete button */
-    font-size: 1.5rem; /* Adjust the size of the trash icon */
-    cursor: pointer; /* Make the cursor a pointer to indicate it's clickable */
-    transition: color 0.3s ease, transform 0.3s ease; /* Smooth transition */
+
+.card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+}
+
+.card-body {
+  flex-grow: 1;
+  white-space: pre-wrap;
+  overflow-y: auto;
+  font-family: 'Courier New', Courier, monospace;
+  margin-top: 10px;
+  padding-top: 10px;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 10px;
+  background-color: #f8f9fa;
+  border-top: 1px solid #ced4da;
+}
+
+.card-footer .btn {
+  color: white;
+  padding: 5px 15px;
+  border-radius: 5px;
+  text-decoration: none;
+  border: 2px solid black;
+  width: 5rem;
+}
+
+.card-footer .btn:hover {
+  background-color: #0056b3;
+}
+
+.card-footer i.fa-trash {
+  margin-right: 20px;
+}
+
+.trashButton {
+  color: #dc3545;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: color 0.3s ease, transform 0.3s ease;
 }
 
 .trashButton:hover {
-    color: #c82333; /* Darker red on hover */
-    transform: scale(1.2); /* Slightly enlarge the icon on hover */
+  color: #c82333;
+  transform: scale(1.2);
 }
 
 .btn-info {
-    background-color: #17a2b8;
-    border: none;
-    color: #fff;
-    padding: 5px 10px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+  background-color: #17a2b8;
+  border: none;
+  color: #fff;
+  padding: 5px 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .btn-info:hover {
-    background-color: #138496; /* Darker shade on hover */
-    transform: scale(1.05); /* Slightly enlarge the button on hover */
+  background-color: #138496;
+  transform: scale(1.05);
 }
 
 .sortButton {
-    background-color: #17a2b8;
-    border: none;
-    color: #fff;
-    padding: 10px 20px;
-    font-size: 1rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: #17a2b8;
+  border: none;
+  color: #fff;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .sortButton:hover {
-    background-color: #138496; /* Darker shade on hover */
-    transform: scale(1.05); /* Slightly enlarge the button on hover */
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); /* Add a subtle shadow on hover */
+  background-color: #138496;
+  transform: scale(1.05);
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .sortButton:active {
-    background-color: #117a8b; /* Even darker shade on click */
-    transform: scale(0.98); /* Slightly shrink the button when clicked */
-    box-shadow: none; /* Remove the shadow on click for a pressed effect */
+  background-color: #117a8b;
+  transform: scale(0.98);
+  box-shadow: none;
 }
 
 .sortButton:focus {
-    outline: none;
-    box-shadow: 0 0 0 0.2rem rgba(23, 162, 184, 0.5); /* Add a focus ring */
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(23, 162, 184, 0.5);
 }
 
 .newNoteButton {
-    background-color: #007bff; /* Primary blue color */
-    border: none;
-    color: #fff; /* White text */
-    padding: 10px 20px; /* Add some padding for a larger button */
-    font-size: 1rem; /* Font size consistent with other buttons */
-    font-weight: bold; /* Make the text bold */
-    text-transform: uppercase; /* Make the text uppercase */
-    border-radius: 5px; /* Slightly rounded corners */
-    cursor: pointer; /* Pointer cursor on hover */
-    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition for hover effects */
+  background-color: #007bff;
+  border: none;
+  color: #fff;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .newNoteButton:hover {
-    background-color: #0056b3; /* Darker blue on hover */
-    transform: scale(1.05); /* Slightly enlarge the button on hover */
+  background-color: #0056b3;
+  transform: scale(1.05);
 }
 
 .newNoteButton:active {
-    background-color: #004080; /* Even darker blue on click */
-    transform: scale(0.98); /* Slightly shrink the button on click */
+  background-color: #004080;
+  transform: scale(0.98);
 }
 
 .newNoteButton:focus {
-    outline: none;
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5); /* Focus ring for accessibility */
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
 }
 
-
-/* delete button modal styling  */
-
 .modal-header {
-    background-color: #dc3545; /* Red background for header */
-    color: #ffffff; /* White text */
-    border-bottom: none; /* Remove default border */
-  }
+  background-color: #dc3545;
+  color: #ffffff;
+  border-bottom: none;
+}
 
-  .modal-title {
-    font-size: 1.25rem; /* Larger title text */
-    font-weight: bold; /* Bold title */
-  }
+.modal-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
 
-  .btn-close {
-    color: #ffffff; /* White close button */
-    opacity: 0.8; /* Slight transparency */
-  }
+.btn-close {
+  color: #ffffff;
+  opacity: 0.8;
+}
 
-  .btn-close:hover {
-    color: #ffffff; /* White close button */
-    opacity: 1; /* Remove transparency on hover */
-  }
+.btn-close:hover {
+  color: #ffffff;
+  opacity: 1;
+}
 
-  /* Modal Body */
-  .modal-body {
-    font-size: 1rem; /* Standard font size */
-    color: #343a40; /* Dark grey text */
-    background-color: #f8f9fa; /* Light grey background */
-  }
+.modal-body {
+  font-size: 1rem;
+  color: #343a40;
+  background-color: #f8f9fa;
+}
 
-  /* Modal Footer */
-  .modal-footer {
-    border-top: none; /* Remove default border */
-    background-color: #f8f9fa; /* Light grey background */
-  }
+.modal-footer {
+  border-top: none;
+  background-color: #f8f9fa;
+}
 
-  .btn-secondary {
-    background-color: #6c757d; /* Custom grey */
-    border: none;
-    font-weight: bold;
-  }
+.btn-secondary {
+  background-color: #6c757d;
+  border: none;
+  font-weight: bold;
+}
 
-  .btn-secondary:hover {
-    background-color: #5a6268; /* Darker grey on hover */
-  }
+.btn-secondary:hover {
+  background-color: #5a6268;
+}
 
-  .btn-danger {
-    background-color: #dc3545; /* Custom red */
-    font-weight: bold;
-  }
+.btn-danger {
+  background-color: #dc3545;
+  font-weight: bold;
+}
 
-  .btn-danger:hover {
-    background-color: #c82333; /* Darker red on hover */
-  }
+.btn-danger:hover {
+  background-color: #c82333;
+}
 
-/* no notes found */
 .img-shrug {
-  width: 300px; /* Set a width for the image */
-  height: auto; /* Maintain aspect ratio */
-  display: block; /* Make the image a block element */
-  margin: 0 auto; /* Center the image horizontally */
-  transition: transform 0.3s ease, opacity 0.3s ease; /* Smooth transition for hover effects */
+  width: 300px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 .img-shrug:hover {
-  transform: scale(1.2); /* Slightly enlarge the image on hover */
+  transform: scale(1.2);
 }
 
 .empty-notes-message {
-  font-size: 1.5rem; /* Larger font size for emphasis */
-  color: #555; /* Neutral gray color for readability */
-  margin-top: 30px; /* Space above the message */
-  padding: 20px; /* Padding around the text */
-  text-align: center; /* Center-align the text */
-  width: 80%; /* Limit the width to prevent the text from stretching too much */
-  margin-left: auto; /* Center the element horizontally */
-  margin-right: auto; /* Center the element horizontally */
+  font-size: 1.5rem;
+  color: #555;
+  margin-top: 30px;
+  padding: 20px;
+  text-align: center;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
 }

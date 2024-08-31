@@ -4,20 +4,16 @@
     height: 300px;
     border: 1px solid #ccc;
     border-radius: 10px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Increased shadow for more prominence */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     position: relative;
     padding: 10px;
 }
 .notepad .header {
     display: flex;
     justify-content: flex-start;
-    padding-bottom: 5px;
-    background-color: #E0E0E0; 
-    padding: 5px 10px; /* Added padding for spacing */
-    border-top-left-radius: 10px; /* Rounded corners for the header */
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius: 10px;
+    padding: 5px 10px;
+    background-color: #E0E0E0;
+    border-radius: 10px 10px 0 0;
     border-bottom: 1px solid #ddd;
     height: 2rem;
 }
@@ -27,6 +23,7 @@
     border-radius: 50%;
     margin-right: 5px;
     padding: 0;
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 .notepad .header .btn-close {
     background-color: red;
@@ -34,6 +31,13 @@
 .notepad .header .btn-shrink {
     background-color: yellow;
 }
+
+.notepad .header .btn-close:hover,
+.notepad .header .btn-shrink:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
 .notepad .content {
     padding: 10px;
     position: relative;
@@ -41,20 +45,19 @@
     text-align: left;
 }
 #typedText {
-    display: inline; /* Ensures the cursor is on the same line as the text */
-    font-family: inherit; /* Inherit font styles from the parent element */
-    font-size: inherit; /* Match the font size */
+    display: inline;
+    font-family: inherit;
     font-size: 1.5rem;
 }
 
 .typed-cursor {
-    font-size: 1.5rem; /* Match the font size or adjust separately */
-    line-height: 1; /* Ensure the cursor aligns vertically with text */
-    vertical-align: center; 
-    color: #333; /* Optional: Match cursor color with text */
+    font-size: 1.5rem;
+    line-height: 1;
+    vertical-align: center;
+    color: #333;
 }
 .notepad .header .btn-shrink::before {
-    content: '-'; /* '-' for minimize button */
-    font-size: 2rem; /* Increase the size of the '-' symbol */
+    content: '-';
+    font-size: 2rem;
     line-height: 0.6;
 }
