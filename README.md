@@ -399,6 +399,6 @@ notes-app
 - **Socket.io**: A JavaScript library for real-time, bidirectional communication between web clients and servers.
 - **Bootstrap**: A popular CSS framework for responsive design and styling.
 - **SweetAlert**: A library for creating beautiful, customizable, and responsive modals.
-
+- **MongoDB Atlas**: Managed cloud database service for secure, scalable, and high-performance MongoDB hosting.
 
 
