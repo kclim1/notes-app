@@ -11,6 +11,10 @@ const notesSchema = new mongoose.Schema({
     type : String,
     ref : "User"
   },
+  sharedWith: [{
+    type: String,  
+    ref: 'User'
+  }],
   title: {
     type: String,
     required: true
