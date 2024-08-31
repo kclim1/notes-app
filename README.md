@@ -9,7 +9,8 @@
 -Pricing
 - Project Structure
 - Dependencies
-- Known Issues
+- Problems Encountered and Learning Process
+-[Link to Google Doc ](https://docs.google.com/document/d/10j_aNiKK_E2lYpR9dw4mWMepIsMjgLnv5hprBdDbW9o/edit?usp=sharing)
 ## Overview
 Nimbus is a note-taking app built using Node.js,Express,Mongoose and Atlas. It features Local,Google and Github authentication, basic CRUD operations and is styled with bootstrap. Oh you can also share your notes with your friend and collaborate in realtime. 
 
