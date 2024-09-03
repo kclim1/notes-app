@@ -79,10 +79,8 @@ form.addEventListener('submit', function(event) {
 
 <script src="/socket.io/socket.io.js"></script>
 <script>
-  // Connect to the Socket.io server
   const socket = io();
   
-  // Debounce function to limit how often the function is called
   function debounce(func, delay) {
     let timeout;
     return function(...args) {
@@ -91,23 +89,20 @@ form.addEventListener('submit', function(event) {
     };
   }
   
-  // Emit changes to the server with a debounce of 500 milliseconds
   const emitChanges = debounce(function() {
-    const content = quill.getContents(); // Get the Delta representation of the content
-    socket.emit('note-changes', { content }); // Emit the Delta content to the server
-  }, 500); // Adjust the delay (in milliseconds) as needed
+    const content = quill.getContents(); 
+    socket.emit('note-changes', { content }); 
+  }, 500); 
   
   quill.on('text-change', (delta, oldDelta, source) => {
-  if (source === 'user') { // Only emit changes triggered by the user
-    socket.emit('note-changes', delta); // Send delta directly
-    console.log('Emitting delta:', delta); // Debugging log to ensure delta is emitted
+  if (source === 'user') { 
+    socket.emit('note-changes', delta); 
+    console.log('Emitting delta:', delta);
   }
 });
-
-// Listen for 'document-change' events from the server
 socket.on('document-change', (delta) => {
-  console.log('Received delta:', delta); // Debugging log to check received delta
-  quill.updateContents(delta, 'api'); // Apply delta using Quill's method
+  console.log('Received delta:', delta); 
+  quill.updateContents(delta, 'api'); 
 });
   </script>
   
@@ -143,10 +138,10 @@ socket.on('document-change', (delta) => {
           throw new Error('User not found');
         }
 
-        return response.json(); // Attempt to parse the response as JSON
+        return response.json(); 
       })
       .then(data => {
-        console.log('Response data:', data); // Log the parsed JSON data
+        console.log('Response data:', data); 
 
         if (!data.message) {
           throw new Error(data.error || 'Failed to share the note');
