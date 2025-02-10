@@ -105,7 +105,7 @@ exports.signup = (req, res) => {
       
       console.log(newUser);
       await newUser.save();
-      res.redirect("/login");
+      res.redirect("/dashboard");
       console.log("User created");
   
     } catch (error) {
