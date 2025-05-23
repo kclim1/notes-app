@@ -1,17 +1,9 @@
-<<<<<<< HEAD
 # fly.toml app configuration file generated for notes-app-green-sound-8924 on 2025-05-23T11:15:50+08:00
-=======
-# fly.toml app configuration file generated for notes-app-lingering-breeze-2797 on 2025-02-09T20:00:25+08:00
->>>>>>> b2bb319e6d820e7d255f2da71a6a19ad24605532
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-<<<<<<< HEAD
 app = 'notes-app-green-sound-8924'
-=======
-app = 'notes-app-lingering-breeze-2797'
->>>>>>> b2bb319e6d820e7d255f2da71a6a19ad24605532
 primary_region = 'sin'
 
 [build]
