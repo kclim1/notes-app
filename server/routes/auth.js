@@ -78,7 +78,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_SECRET,
-      callbackURL: "/auth/google/callback",
+      callbackURL: process.env.GOOGLE_REDIRECT_URI,
     },
     async function (accessToken, refreshToken, profile, cb) {
       try {
@@ -152,7 +152,7 @@ passport.use(
     {
       clientID: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_SECRET,
-      callbackURL: "http://localhost:3000/auth/github/callback",
+      callbackURL: process.env.GITHUB_CALLBACK_URI, //set the value in env 
     },
     async function (accessToken, refreshToken, profile, done) {
       try {

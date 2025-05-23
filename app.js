@@ -2,7 +2,6 @@ const dotenv = require("dotenv").config();
 const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
 const app = express();
-const port = 3000;
 const path = require("path");
 const mongooseConnect = require(path.join(__dirname, "server", "config", "db"));
 const session = require("express-session");
@@ -15,6 +14,7 @@ const socketIo = require('socket.io');
 const server = http.createServer(app); 
 const io = socketIo(server); 
 const {body , validationResult} = require ('express-validator')
+const port = process.env.PORT || 3000
 
 
 app.use(methodOverride('_method'));
@@ -67,7 +67,7 @@ io.on('connection', (socket) => {
 
 
 // Start the server
-server.listen(port, () => {
+server.listen(port,"0.0.0.0", () => {
   console.log(`Socket.io server running on port ${port}`);
 });
 
